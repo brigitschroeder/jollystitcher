@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>The Jolly Stitcher</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="styles.css" type="text/css">
+	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+	<link rel="stylesheet" href="css/bootstrap-select.min.css" type="text/css">
+	<script type="text/javascript"src="jquery-1.11.3.min.js"></script>
+	<script>
+	jQuery(document).ready(function() {
+		var indexController = new IndexController();
+		indexController.start();
+	});
+	</script>
+</head>
+
+<body>
+	<div class="wrapper container">
+		<div class="stitcherUI">
+			<div class="stitchercontrols">
+
+				<select id="threadpicker" class="selectpicker" data-live-search="true">
+					<option data-content="<span class='colorBlock' style='background-color: #FFFFFF;'></span> DMC 000 blanc White">#FFFFFF</option>
+					<option data-content="<span class='colorBlock' style='background-color: #945B80;'></span> DMC 208 Lavender-VY DK">#945B80</option>
+					<option data-content="<span class='colorBlock' style='background-color: #CE94BA;'></span> DMC 209 Lavender-DK">#CE94BA</option>
+					<option data-content="<span class='colorBlock' style='background-color: #ECCFE1;'></span> DMC 210 Lavender-MD">#ECCFE1</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F3DAE4;'></span> DMC 211 Lavender-LT">#F3DAE4</option>
+					<option data-content="<span class='colorBlock' style='background-color: #9C294A;'></span> DMC 221 Shell Pink-VY DK">#9C294A</option>
+					<option data-content="<span class='colorBlock' style='background-color: #DB8073;'></span> DMC 223 Shell Pink-LT">#DB8073</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFC7B0;'></span> DMC 224 Shell Pink-VY LT">#FFC7B0</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFF0E4;'></span> DMC 225 Shell Pink-ULT VY L">#FFF0E4</option>
+					<option data-content="<span class='colorBlock' style='background-color: #8F3926;'></span> DMC 300 Mahogany-VY DK">#8F3926</option>
+					<option data-content="<span class='colorBlock' style='background-color: #D16654;'></span> DMC 301 Mahogany-MD">#D16654</option>
+					<option data-content="<span class='colorBlock' style='background-color: #BC0061;'></span> DMC 304 Christmas Red-MD">#BC0061</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFE76D;'></span> DMC 307 Lemon">#FFE76D</option>
+					<option data-content="<span class='colorBlock' style='background-color: #D62B5B;'></span> DMC 309 Rose-DP">#D62B5B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #000000;'></span> DMC 310 Black">#000000</option>
+					<option data-content="<span class='colorBlock' style='background-color: #004F61;'></span> DMC 311 Navy Blue-MD">#004F61</option>
+					<option data-content="<span class='colorBlock' style='background-color: #3A5467;'></span> DMC 312 Navy Blue-LT">#3A5467</option>
+					<option data-content="<span class='colorBlock' style='background-color: #A35A5B;'></span> DMC 315 Antique Mauve-VY DK">#A35A5B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #DC8D8D;'></span> DMC 316 Antique Mauve-MD">#DC8D8D</option>
+					<option data-content="<span class='colorBlock' style='background-color: #A78B88;'></span> DMC 317 Pewter Grey">#A78B88</option>
+					<option data-content="<span class='colorBlock' style='background-color: #C5C6BE;'></span> DMC 318 Steel Grey - LT">#C5C6BE</option>
+					<option data-content="<span class='colorBlock' style='background-color: #555F52;'></span> DMC 319 Pistachio Grn-VY DK">#555F52</option>
+					<option data-content="<span class='colorBlock' style='background-color: #8A9978;'></span> DMC 320 Pistachio Green-MD">#8A9978</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E71261;'></span> DMC 321 Christmas Red">#E71261</option>
+					<option data-content="<span class='colorBlock' style='background-color: #516D87;'></span> DMC 322 Navy Blue-VY LT">#516D87</option>
+					<option data-content="<span class='colorBlock' style='background-color: #BC1641;'></span> DMC 326 Rose-VY DP">#BC1641</option>
+					<option data-content="<span class='colorBlock' style='background-color: #3D0067;'></span> DMC 327 Violet-DK">#3D0067</option>
+					<option data-content="<span class='colorBlock' style='background-color: #7F5482;'></span> DMC 333 Blue Violet-VY DK">#7F5482</option>
+					<option data-content="<span class='colorBlock' style='background-color: #738CAA;'></span> DMC 334 Baby Blue-MD">#738CAA</option>
+					<option data-content="<span class='colorBlock' style='background-color: #DB244F;'></span> DMC 335 Rose">#DB244F</option>
+					<option data-content="<span class='colorBlock' style='background-color: #244967;'></span> DMC 336 Navy Blue">#244967</option>
+					<option data-content="<span class='colorBlock' style='background-color: #A279A4;'></span> DMC 340 Blue Violet-MD">#A279A4</option>
+					<option data-content="<span class='colorBlock' style='background-color: #91B4C5;'></span> DMC 341 Blue Violet-LT">#91B4C5</option>
+					<option data-content="<span class='colorBlock' style='background-color: #C22443;'></span> DMC 347 Salmon-VY DK">#C22443</option>
+					<option data-content="<span class='colorBlock' style='background-color: #DC3D5B;'></span> DMC 349 Coral-DK">#DC3D5B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #ED455A;'></span> DMC 350 Coral-MD">#ED455A</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF8087;'></span> DMC 351 Coral">#FF8087</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF9D90;'></span> DMC 352 Coral-LT">#FF9D90</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFC4B8;'></span> DMC 353 Peach Flesh">#FFC4B8</option>
+					<option data-content="<span class='colorBlock' style='background-color: #BD492F;'></span> DMC 355 Terra Cotta-DK">#BD492F</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E2725B;'></span> DMC 356 Terra Cotta-MD">#E2725B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #5F705B;'></span> DMC 367 Pistachio Green-DK">#5F705B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #B5CEA2;'></span> DMC 368 Pistachio Green-LT">#B5CEA2</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F3FAD1;'></span> DMC 369 Pistachio Grn-VY LT">#F3FAD1</option>
+					<option data-content="<span class='colorBlock' style='background-color: #B88A57;'></span> DMC 370 Mustard - MD">#B88A57</option>
+					<option data-content="<span class='colorBlock' style='background-color: #C49B64;'></span> DMC 371 Mustard">#C49B64</option>
+					<option data-content="<span class='colorBlock' style='background-color: #CBA26B;'></span> DMC 372 Mustard - LT">#CBA26B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #9D3C27;'></span> DMC 400 Mahogany-DK">#9D3C27</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFBEA4;'></span> DMC 402 Mahogany-VY LT">#FFBEA4</option>
+					<option data-content="<span class='colorBlock' style='background-color: #C2654C;'></span> DMC 407 Sportsman Flsh-VY D">#C2654C</option>
+					<option data-content="<span class='colorBlock' style='background-color: #6D5F5F;'></span> DMC 413 Pewter Grey - DK">#6D5F5F</option>
+					<option data-content="<span class='colorBlock' style='background-color: #A78B88;'></span> DMC 414 Steel Grey - DK">#A78B88</option>
+					<option data-content="<span class='colorBlock' style='background-color: #DDDDDA;'></span> DMC 415 Pearl Grey">#DDDDDA</option>
+					<option data-content="<span class='colorBlock' style='background-color: #8C5B2B;'></span> DMC 420 Hazel Nut Brown-DK">#8C5B2B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #EDAC7B;'></span> DMC 422 Hazel Nut Brown-LT">#EDAC7B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #975414;'></span> DMC 433 Brown-MD">#975414</option>
+					<option data-content="<span class='colorBlock' style='background-color: #B26746;'></span> DMC 434 Brown-LT">#B26746</option>
+					<option data-content="<span class='colorBlock' style='background-color: #BB6B39;'></span> DMC 435 Brown-VY LT">#BB6B39</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E79873;'></span> DMC 436 Tan">#E79873</option>
+					<option data-content="<span class='colorBlock' style='background-color: #EEAB79;'></span> DMC 437 Tan-LT">#EEAB79</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFB000;'></span> DMC 444 Lemon-DK">#FFB000</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFFFBE;'></span> DMC 445 Lemon-LT">#FFFFBE</option>
+					<option data-content="<span class='colorBlock' style='background-color: #B3978F;'></span> DMC 451 Shell Grey - DK">#B3978F</option>
+					<option data-content="<span class='colorBlock' style='background-color: #D2B9AF;'></span> DMC 452 Shell Grey - MD">#D2B9AF</option>
+					<option data-content="<span class='colorBlock' style='background-color: #EBCFB9;'></span> DMC 453 Shell Grey - LT">#EBCFB9</option>
+					<option data-content="<span class='colorBlock' style='background-color: #74725C;'></span> DMC 469 Avocado Green">#74725C</option>
+					<option data-content="<span class='colorBlock' style='background-color: #858F6C;'></span> DMC 470 Avocado Green-LT">#858F6C</option>
+					<option data-content="<span class='colorBlock' style='background-color: #B0BB8C;'></span> DMC 471 Avocado Green-VY LT">#B0BB8C</option>
+					<option data-content="<span class='colorBlock' style='background-color: #EEFFB6;'></span> DMC 472 Avocado Green-ULT L">#EEFFB6</option>
+					<option data-content="<span class='colorBlock' style='background-color: #BB0061;'></span> DMC 498 Christmas Red-LT">#BB0061</option>
+					<option data-content="<span class='colorBlock' style='background-color: #2B3929;'></span> DMC 500 Blue Green-VY DK">#2B3929</option>
+					<option data-content="<span class='colorBlock' style='background-color: #435549;'></span> DMC 501 Blue Green-DK">#435549</option>
+					<option data-content="<span class='colorBlock' style='background-color: #869E86;'></span> DMC 502 Blue Green">#869E86</option>
+					<option data-content="<span class='colorBlock' style='background-color: #C3CEB7;'></span> DMC 503 Blue Green-MD">#C3CEB7</option>
+					<option data-content="<span class='colorBlock' style='background-color: #CEDDC1;'></span> DMC 504 Blue Green-LT">#CEDDC1</option>
+					<option data-content="<span class='colorBlock' style='background-color: #107F87;'></span> DMC 517 Wedgewood-MD">#107F87</option>
+					<option data-content="<span class='colorBlock' style='background-color: #66949A;'></span> DMC 518 Wedgewood-LT">#66949A</option>
+					<option data-content="<span class='colorBlock' style='background-color: #C2D1CF;'></span> DMC 519 Sky Blue">#C2D1CF</option>
+					<option data-content="<span class='colorBlock' style='background-color: #374912;'></span> DMC 520 Fern Green-DK">#374912</option>
+					<option data-content="<span class='colorBlock' style='background-color: #9FA98E;'></span> DMC 522 Fern Green">#9FA98E</option>
+					<option data-content="<span class='colorBlock' style='background-color: #ACB78E;'></span> DMC 523 Fern Green-LT">#ACB78E</option>
+					<option data-content="<span class='colorBlock' style='background-color: #CDB69E;'></span> DMC 524 Fern Green-VY LT">#CDB69E</option>
+					<option data-content="<span class='colorBlock' style='background-color: #555559;'></span> DMC 535 Ash Grey - VY LT">#555559</option>
+					<option data-content="<span class='colorBlock' style='background-color: #EFD6BC;'></span> DMC 543 Beige Brown-UL VY L">#EFD6BC</option>
+					<option data-content="<span class='colorBlock' style='background-color: #6D1261;'></span> DMC 550 Violet-VY LT">#6D1261</option>
+					<option data-content="<span class='colorBlock' style='background-color: #925582;'></span> DMC 552 Violet-MD">#925582</option>
+					<option data-content="<span class='colorBlock' style='background-color: #A06492;'></span> DMC 553 Violet">#A06492</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F3CEE1;'></span> DMC 554 Violet-LT">#F3CEE1</option>
+					<option data-content="<span class='colorBlock' style='background-color: #3B604C;'></span> DMC 561 Jade-VY DK">#3B604C</option>
+					<option data-content="<span class='colorBlock' style='background-color: #618661;'></span> DMC 562 Jade-MD">#618661</option>
+					<option data-content="<span class='colorBlock' style='background-color: #B6D4B4;'></span> DMC 563 Jade-LT">#B6D4B4</option>
+					<option data-content="<span class='colorBlock' style='background-color: #D6E6CC;'></span> DMC 564 Jade-VY LT">#D6E6CC</option>
+					<option data-content="<span class='colorBlock' style='background-color: #006700;'></span> DMC 580 Moss Green-DK">#006700</option>
+					<option data-content="<span class='colorBlock' style='background-color: #979831;'></span> DMC 581 Moss Green">#979831</option>
+					<option data-content="<span class='colorBlock' style='background-color: #809784;'></span> DMC 597 Turquoise">#809784</option>
+					<option data-content="<span class='colorBlock' style='background-color: #D0DFCD;'></span> DMC 598 Turquoise-LT">#D0DFCD</option>
+					<option data-content="<span class='colorBlock' style='background-color: #D0396A;'></span> DMC 600 Cranberry-VY DK">#D0396A</option>
+					<option data-content="<span class='colorBlock' style='background-color: #DE3969;'></span> DMC 601 Cranberry-DK">#DE3969</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E7547A;'></span> DMC 602 Cranberry-MD">#E7547A</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF738C;'></span> DMC 603 Cranberry">#FF738C</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFBDCA;'></span> DMC 604 Cranberry-LT">#FFBDCA</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFCFD6;'></span> DMC 605 Cranberry-VY LT">#FFCFD6</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF0000;'></span> DMC 606 Bright Orange-Red">#FF0000</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF5B00;'></span> DMC 608 Bright Orange">#FF5B00</option>
+					<option data-content="<span class='colorBlock' style='background-color: #976854;'></span> DMC 610 Drab Brown - VY DK">#976854</option>
+					<option data-content="<span class='colorBlock' style='background-color: #9E6D5B;'></span> DMC 611 Drab Brown - DK">#9E6D5B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #CB9867;'></span> DMC 612 Drab Brown - MD">#CB9867</option>
+					<option data-content="<span class='colorBlock' style='background-color: #DBB07A;'></span> DMC 613 Drab Brown - LT">#DBB07A</option>
+					<option data-content="<span class='colorBlock' style='background-color: #A24D34;'></span> DMC 632 Negro Flesh-MD">#A24D34</option>
+					<option data-content="<span class='colorBlock' style='background-color: #A3A39D;'></span> DMC 640 Beige Grey - VY DK">#A3A39D</option>
+					<option data-content="<span class='colorBlock' style='background-color: #AEB0AA;'></span> DMC 642 Beige Grey - DK">#AEB0AA</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E0E0D7;'></span> DMC 644 Beige Grey-MD">#E0E0D7</option>
+					<option data-content="<span class='colorBlock' style='background-color: #717171;'></span> DMC 645 Beaver Grey - VY DK">#717171</option>
+					<option data-content="<span class='colorBlock' style='background-color: #797979;'></span> DMC 646 Beaver Grey-DK">#797979</option>
+					<option data-content="<span class='colorBlock' style='background-color: #BEBEB9;'></span> DMC 647 Beaver Grey - MD">#BEBEB9</option>
+					<option data-content="<span class='colorBlock' style='background-color: #CACACA;'></span> DMC 648 Beaver Grey-LT">#CACACA</option>
+					<option data-content="<span class='colorBlock' style='background-color: #D52756;'></span> DMC 666 Christmas Red-LT">#D52756</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFCE9E;'></span> DMC 676 Old Gold-LT">#FFCE9E</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFE7B6;'></span> DMC 677 Old Gold-VY LT">#FFE7B6</option>
+					<option data-content="<span class='colorBlock' style='background-color: #D18C67;'></span> DMC 680 Old Gold-DK">#D18C67</option>
+					<option data-content="<span class='colorBlock' style='background-color: #005B06;'></span> DMC 699 Chirstmas Green">#005B06</option>
+					<option data-content="<span class='colorBlock' style='background-color: #00602F;'></span> DMC 700 Christmas Green-BRT">#00602F</option>
+					<option data-content="<span class='colorBlock' style='background-color: #4F6C45;'></span> DMC 701 Christmas Green-LT">#4F6C45</option>
+					<option data-content="<span class='colorBlock' style='background-color: #4F7942;'></span> DMC 702 Kelly Green">#4F7942</option>
+					<option data-content="<span class='colorBlock' style='background-color: #79904C;'></span> DMC 703 Chartreuse">#79904C</option>
+					<option data-content="<span class='colorBlock' style='background-color: #A5A467;'></span> DMC 704 Chartreuse-BRT">#A5A467</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F5F0DB;'></span> DMC 712 Cream">#F5F0DB</option>
+					<option data-content="<span class='colorBlock' style='background-color: #DB3779;'></span> DMC 718 Plum">#DB3779</option>
+					<option data-content="<span class='colorBlock' style='background-color: #C8242B;'></span> DMC 720 Orange Spice-DK">#C8242B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF7361;'></span> DMC 721 Orange Spice-MD">#FF7361</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF926D;'></span> DMC 722 Orange Spice-LT">#FF926D</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFC87C;'></span> DMC 725 Topaz">#FFC87C</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFE080;'></span> DMC 726 Topaz-LT">#FFE080</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFEBA8;'></span> DMC 727 Topaz-VY LT">#FFEBA8</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F3B080;'></span> DMC 729 Old Gold-MD">#F3B080</option>
+					<option data-content="<span class='colorBlock' style='background-color: #846600;'></span> DMC 730 Olive Green-VY DK">#846600</option>
+					<option data-content="<span class='colorBlock' style='background-color: #8C6700;'></span> DMC 731 Olive Green-DK">#8C6700</option>
+					<option data-content="<span class='colorBlock' style='background-color: #916800;'></span> DMC 732 Olive Green">#916800</option>
+					<option data-content="<span class='colorBlock' style='background-color: #CE9B61;'></span> DMC 733 Olive Green-MD">#CE9B61</option>
+					<option data-content="<span class='colorBlock' style='background-color: #DDA66B;'></span> DMC 734 Olive Green-LT">#DDA66B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F4C38B;'></span> DMC 738 Tan-VY LT">#F4C38B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F4E9CA;'></span> DMC 739 Tan-ULT VY LT">#F4E9CA</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF8313;'></span> DMC 740 Tangerine">#FF8313</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF8E04;'></span> DMC 741 Tangerine-MD">#FF8E04</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFB755;'></span> DMC 742 Tangerine-LT">#FFB755</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFE692;'></span> DMC 743 Yellow-MD">#FFE692</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFEFAA;'></span> DMC 744 Yellow-PALE">#FFEFAA</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFF0C5;'></span> DMC 745 Yellow-LT PALE">#FFF0C5</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F6EADB;'></span> DMC 746 Off White">#F6EADB</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F0F7EF;'></span> DMC 747 Sky Blue-VY LT">#F0F7EF</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FBE3D1;'></span> DMC 754 Peach Flesh-LT">#FBE3D1</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFB193;'></span> DMC 758 Terra Cotta-VY LT">#FFB193</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F9A092;'></span> DMC 760 Salmon">#F9A092</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFC9BC;'></span> DMC 761 Salmon-LT">#FFC9BC</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E8E8E5;'></span> DMC 762 Pearl Grey - VY LT">#E8E8E5</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E7F9CB;'></span> DMC 772 Pine Green--LT">#E7F9CB</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F7F6F8;'></span> DMC 775 Baby Blue-VY LT">#F7F6F8</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFB1AE;'></span> DMC 776 Pink-MD">#FFB1AE</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFC7B8;'></span> DMC 778 Antique Mauve-VY LT">#FFC7B8</option>
+					<option data-content="<span class='colorBlock' style='background-color: #B5622E;'></span> DMC 780 Topaz-ULT VY DK">#B5622E</option>
+					<option data-content="<span class='colorBlock' style='background-color: #B56B38;'></span> DMC 781 Topaz-VY DK">#B56B38</option>
+					<option data-content="<span class='colorBlock' style='background-color: #CC7742;'></span> DMC 782 Topaz-DK">#CC7742</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E19255;'></span> DMC 783 Topaz-MD">#E19255</option>
+					<option data-content="<span class='colorBlock' style='background-color: #47375D;'></span> DMC 791 Cornflower Blue-VYD">#47375D</option>
+					<option data-content="<span class='colorBlock' style='background-color: #616180;'></span> DMC 792 Cornflower Blue-DK">#616180</option>
+					<option data-content="<span class='colorBlock' style='background-color: #938BA4;'></span> DMC 793 Cornflower Blue-MD">#938BA4</option>
+					<option data-content="<span class='colorBlock' style='background-color: #BBD0DA;'></span> DMC 794 Cornflower Blue-LT">#BBD0DA</option>
+					<option data-content="<span class='colorBlock' style='background-color: #1E3A5F;'></span> DMC 796 Royal Blue-DK">#1E3A5F</option>
+					<option data-content="<span class='colorBlock' style='background-color: #1E4263;'></span> DMC 797 Royal Blue">#1E4263</option>
+					<option data-content="<span class='colorBlock' style='background-color: #67738D;'></span> DMC 798 Delft-DK">#67738D</option>
+					<option data-content="<span class='colorBlock' style='background-color: #849CB6;'></span> DMC 799 Delft-MD">#849CB6</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E9EEE9;'></span> DMC 800 Delft-PALE">#E9EEE9</option>
+					<option data-content="<span class='colorBlock' style='background-color: #7B4714;'></span> DMC 801 Coffee Brown-DK">#7B4714</option>
+					<option data-content="<span class='colorBlock' style='background-color: #1E8285;'></span> DMC 806 Peacock Blue-DK">#1E8285</option>
+					<option data-content="<span class='colorBlock' style='background-color: #80A7A0;'></span> DMC 807 Peacock Blue">#80A7A0</option>
+					<option data-content="<span class='colorBlock' style='background-color: #BEC1CD;'></span> DMC 809 Delft">#BEC1CD</option>
+					<option data-content="<span class='colorBlock' style='background-color: #AFC3CD;'></span> DMC 813 Blue-LT">#AFC3CD</option>
+					<option data-content="<span class='colorBlock' style='background-color: #A20058;'></span> DMC 814 Garnet-DK">#A20058</option>
+					<option data-content="<span class='colorBlock' style='background-color: #A6005B;'></span> DMC 815 Garnet-MD">#A6005B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #B3005B;'></span> DMC 816 Garnet">#B3005B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #DB1855;'></span> DMC 817 Coral Red-VY DK">#DB1855</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFEAEB;'></span> DMC 818 Baby Pink">#FFEAEB</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F8F7DD;'></span> DMC 819 Baby Pink-LT">#F8F7DD</option>
+					<option data-content="<span class='colorBlock' style='background-color: #1E3655;'></span> DMC 820 Royal Blue-VY DK">#1E3655</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F2EADB;'></span> DMC 822 Beige Grey-LT">#F2EADB</option>
+					<option data-content="<span class='colorBlock' style='background-color: #000049;'></span> DMC 823 Navy Blue-DK">#000049</option>
+					<option data-content="<span class='colorBlock' style='background-color: #476174;'></span> DMC 824 Blue-VY DK">#476174</option>
+					<option data-content="<span class='colorBlock' style='background-color: #556C80;'></span> DMC 825 Blue-DK">#556C80</option>
+					<option data-content="<span class='colorBlock' style='background-color: #738A99;'></span> DMC 826 Blue-MD">#738A99</option>
+					<option data-content="<span class='colorBlock' style='background-color: #D5E7E8;'></span> DMC 827 Blue-VY LT">#D5E7E8</option>
+					<option data-content="<span class='colorBlock' style='background-color: #EDF7EE;'></span> DMC 828 Blue-ULT VY LT">#EDF7EE</option>
+					<option data-content="<span class='colorBlock' style='background-color: #825A08;'></span> DMC 829 Golden Olive-VY DK">#825A08</option>
+					<option data-content="<span class='colorBlock' style='background-color: #885F12;'></span> DMC 830 Golden Olive-DK">#885F12</option>
+					<option data-content="<span class='colorBlock' style='background-color: #906712;'></span> DMC 831 Golden Olive-MD">#906712</option>
+					<option data-content="<span class='colorBlock' style='background-color: #B27737;'></span> DMC 832 Golden Olive">#B27737</option>
+					<option data-content="<span class='colorBlock' style='background-color: #DBB680;'></span> DMC 833 Golden Olive-LT">#DBB680</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F2D18E;'></span> DMC 834 Golden Olive-VY LT">#F2D18E</option>
+					<option data-content="<span class='colorBlock' style='background-color: #5E381B;'></span> DMC 838 Beige Brown-VY DK">#5E381B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #6D4227;'></span> DMC 839 Beige Brown-DK">#6D4227</option>
+					<option data-content="<span class='colorBlock' style='background-color: #80551E;'></span> DMC 840 Beige Brown-MD">#80551E</option>
+					<option data-content="<span class='colorBlock' style='background-color: #BC866B;'></span> DMC 841 Beige Brown-LT">#BC866B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #DBC2A4;'></span> DMC 842 Beige Brown-VY LT">#DBC2A4</option>
+					<option data-content="<span class='colorBlock' style='background-color: #6B6766;'></span> DMC 844 Beaver Brown -ULT D">#6B6766</option>
+					<option data-content="<span class='colorBlock' style='background-color: #995C30;'></span> DMC 868 Hazel Nut Brown-VYD">#995C30</option>
+					<option data-content="<span class='colorBlock' style='background-color: #995C30;'></span> DMC 869 Hazel Nut Brn-VY DK">#995C30</option>
+					<option data-content="<span class='colorBlock' style='background-color: #4F564C;'></span> DMC 890 Pistachio Grn-ULT D">#4F564C</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F13154;'></span> DMC 891 Carnation-DK">#F13154</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F95A61;'></span> DMC 892 Carnation-MD">#F95A61</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F3959D;'></span> DMC 893 Carnation-LT">#F3959D</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFC2BF;'></span> DMC 894 Carnation-VY LT">#FFC2BF</option>
+					<option data-content="<span class='colorBlock' style='background-color: #595C4E;'></span> DMC 895 Hunter Green-VY DK">#595C4E</option>
+					<option data-content="<span class='colorBlock' style='background-color: #763713;'></span> DMC 898 Coffee Brown-VY DK">#763713</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E96D73;'></span> DMC 899 Rose-MD">#E96D73</option>
+					<option data-content="<span class='colorBlock' style='background-color: #CE2B00;'></span> DMC 900 Burnt Orange-DK">#CE2B00</option>
+					<option data-content="<span class='colorBlock' style='background-color: #8A184D;'></span> DMC 902 Granet-VY DK">#8A184D</option>
+					<option data-content="<span class='colorBlock' style='background-color: #4E5F39;'></span> DMC 904 Parrot Green-VY DK">#4E5F39</option>
+					<option data-content="<span class='colorBlock' style='background-color: #627739;'></span> DMC 905 Parrot Green-DK">#627739</option>
+					<option data-content="<span class='colorBlock' style='background-color: #8FA359;'></span> DMC 906 Parrot Green-MD">#8FA359</option>
+					<option data-content="<span class='colorBlock' style='background-color: #B9C866;'></span> DMC 907 Parrot Green-LT">#B9C866</option>
+					<option data-content="<span class='colorBlock' style='background-color: #316955;'></span> DMC 909 Emerald Green-VY DK">#316955</option>
+					<option data-content="<span class='colorBlock' style='background-color: #30745B;'></span> DMC 910 Emerald Green-DK">#30745B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #318061;'></span> DMC 911 Emerald Green-MD">#318061</option>
+					<option data-content="<span class='colorBlock' style='background-color: #739E73;'></span> DMC 912 Emerald Green-LT">#739E73</option>
+					<option data-content="<span class='colorBlock' style='background-color: #99BC95;'></span> DMC 913 Nile Green-MD">#99BC95</option>
+					<option data-content="<span class='colorBlock' style='background-color: #AA185B;'></span> DMC 915 Plum-DK">#AA185B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #AB165F;'></span> DMC 917 Plum-MD">#AB165F</option>
+					<option data-content="<span class='colorBlock' style='background-color: #A8444C;'></span> DMC 918 Red Copper-DK">#A8444C</option>
+					<option data-content="<span class='colorBlock' style='background-color: #B44B52;'></span> DMC 919 Red Copper">#B44B52</option>
+					<option data-content="<span class='colorBlock' style='background-color: #C55E58;'></span> DMC 920 Copper-MD">#C55E58</option>
+					<option data-content="<span class='colorBlock' style='background-color: #CE675B;'></span> DMC 921 Copper">#CE675B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #ED8673;'></span> DMC 922 Copper-LT">#ED8673</option>
+					<option data-content="<span class='colorBlock' style='background-color: #566364;'></span> DMC 924 Grey Green--VY DK">#566364</option>
+					<option data-content="<span class='colorBlock' style='background-color: #607473;'></span> DMC 926 Grey Green-LT">#607473</option>
+					<option data-content="<span class='colorBlock' style='background-color: #C8C6C2;'></span> DMC 927 Grey Green-LT">#C8C6C2</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E1E0D8;'></span> DMC 928 Grey Green--VY LT">#E1E0D8</option>
+					<option data-content="<span class='colorBlock' style='background-color: #667A8C;'></span> DMC 930 Antique Blue-DK">#667A8C</option>
+					<option data-content="<span class='colorBlock' style='background-color: #7C8791;'></span> DMC 931 Antique Blue-MD">#7C8791</option>
+					<option data-content="<span class='colorBlock' style='background-color: #B6BAC2;'></span> DMC 932 Antique Blue-LT">#B6BAC2</option>
+					<option data-content="<span class='colorBlock' style='background-color: #3E3B28;'></span> DMC 934 Black Avocado Green">#3E3B28</option>
+					<option data-content="<span class='colorBlock' style='background-color: #433F2F;'></span> DMC 935 Avocado Green-DK">#433F2F</option>
+					<option data-content="<span class='colorBlock' style='background-color: #454531;'></span> DMC 936 Avocado Green--VY D">#454531</option>
+					<option data-content="<span class='colorBlock' style='background-color: #495637;'></span> DMC 937 Avocado Green-MD">#495637</option>
+					<option data-content="<span class='colorBlock' style='background-color: #632710;'></span> DMC 938 Coffee Brown-ULT DK">#632710</option>
+					<option data-content="<span class='colorBlock' style='background-color: #000031;'></span> DMC 939 Navy Blue-Vy DK">#000031</option>
+					<option data-content="<span class='colorBlock' style='background-color: #00A275;'></span> DMC 943 Aquamarine-MD">#00A275</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFCEA4;'></span> DMC 945 Flesh-MD">#FFCEA4</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F44900;'></span> DMC 946 Burnt Orange-MD">#F44900</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF5B00;'></span> DMC 947 Burnt Orange">#FF5B00</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFF3E7;'></span> DMC 948 Peach Flesh-VY LT">#FFF3E7</option>
+					<option data-content="<span class='colorBlock' style='background-color: #EFA27F;'></span> DMC 950 Sportsman Flesh">#EFA27F</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFE5BC;'></span> DMC 951 Flesh">#FFE5BC</option>
+					<option data-content="<span class='colorBlock' style='background-color: #AAD5A4;'></span> DMC 954 Nile Green">#AAD5A4</option>
+					<option data-content="<span class='colorBlock' style='background-color: #D6E6CC;'></span> DMC 955 Nile Green-LT">#D6E6CC</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF6D73;'></span> DMC 956 Geranium">#FF6D73</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFCCD0;'></span> DMC 957 Gernanium-PALE">#FFCCD0</option>
+					<option data-content="<span class='colorBlock' style='background-color: #00A082;'></span> DMC 958 Sea Green-DK">#00A082</option>
+					<option data-content="<span class='colorBlock' style='background-color: #ABCEB1;'></span> DMC 959 Sea Green-MD">#ABCEB1</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F36C7B;'></span> DMC 961 Dusty Rose-DK">#F36C7B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FD868D;'></span> DMC 962 Dusty Rose-MD">#FD868D</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFE9E9;'></span> DMC 963 Dusty Rose-ULT VY L">#FFE9E9</option>
+					<option data-content="<span class='colorBlock' style='background-color: #D0E0D2;'></span> DMC 964 Sea Green-LT">#D0E0D2</option>
+					<option data-content="<span class='colorBlock' style='background-color: #CED5B0;'></span> DMC 966 Baby Green-MD">#CED5B0</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF7518;'></span> DMC 970 Pumpkin-LT">#FF7518</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF6A00;'></span> DMC 971 Pumpkin">#FF6A00</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF9200;'></span> DMC 972 Canary-DP">#FF9200</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFC243;'></span> DMC 973 Canary-BRT">#FFC243</option>
+					<option data-content="<span class='colorBlock' style='background-color: #9E4312;'></span> DMC 975 Golden Brown-DK">#9E4312</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F68D39;'></span> DMC 976 Golden Brown-MD">#F68D39</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFA449;'></span> DMC 977 Golden Brown-LT">#FFA449</option>
+					<option data-content="<span class='colorBlock' style='background-color: #3A5241;'></span> DMC 986 Forest Green-VY DK">#3A5241</option>
+					<option data-content="<span class='colorBlock' style='background-color: #536149;'></span> DMC 987 Forest Green-DK">#536149</option>
+					<option data-content="<span class='colorBlock' style='background-color: #86916E;'></span> DMC 988 Forest Green-MD">#86916E</option>
+					<option data-content="<span class='colorBlock' style='background-color: #86996E;'></span> DMC 989 Forest Green">#86996E</option>
+					<option data-content="<span class='colorBlock' style='background-color: #2F5B49;'></span> DMC 991 Aquamarine-DK">#2F5B49</option>
+					<option data-content="<span class='colorBlock' style='background-color: #92B7A5;'></span> DMC 992 Aquamarine">#92B7A5</option>
+					<option data-content="<span class='colorBlock' style='background-color: #C0E0C8;'></span> DMC 993 Aquamarine-LT">#C0E0C8</option>
+					<option data-content="<span class='colorBlock' style='background-color: #007B86;'></span> DMC 995 Electric Blue-DK">#007B86</option>
+					<option data-content="<span class='colorBlock' style='background-color: #AADEE1;'></span> DMC 996 Electric Blue-MD">#AADEE1</option>
+					<option data-content="<span class='colorBlock' style='background-color: #7B5B40;'></span> DMC 3011 Khaki Green-DK">#7B5B40</option>
+					<option data-content="<span class='colorBlock' style='background-color: #AA8667;'></span> DMC 3012 Khaki Green-MD">#AA8667</option>
+					<option data-content="<span class='colorBlock' style='background-color: #D0C3A4;'></span> DMC 3013 Khaki Green-LT">#D0C3A4</option>
+					<option data-content="<span class='colorBlock' style='background-color: #735B5D;'></span> DMC 3021 Brown Grey - VY DK">#735B5D</option>
+					<option data-content="<span class='colorBlock' style='background-color: #ACACAA;'></span> DMC 3022 Brown Grey - MD">#ACACAA</option>
+					<option data-content="<span class='colorBlock' style='background-color: #C6BEAD;'></span> DMC 3023 Brown Grey - LT">#C6BEAD</option>
+					<option data-content="<span class='colorBlock' style='background-color: #D2D0CD;'></span> DMC 3024 Brown Grey - VY LT">#D2D0CD</option>
+					<option data-content="<span class='colorBlock' style='background-color: #543817;'></span> DMC 3031 Mocha Brown-VY DK">#543817</option>
+					<option data-content="<span class='colorBlock' style='background-color: #BC9C78;'></span> DMC 3032 Mocha Brown-MD">#BC9C78</option>
+					<option data-content="<span class='colorBlock' style='background-color: #EFDBBE;'></span> DMC 3033 Mocha Brown-VY LT">#EFDBBE</option>
+					<option data-content="<span class='colorBlock' style='background-color: #BE9BA7;'></span> DMC 3041 Antique Violet-MD">#BE9BA7</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E1CDC8;'></span> DMC 3042 Antique Violet-LT">#E1CDC8</option>
+					<option data-content="<span class='colorBlock' style='background-color: #D89769;'></span> DMC 3045 Yellow Beige-DK">#D89769</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E5C18B;'></span> DMC 3046 Yellow Beige-MD">#E5C18B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFECD3;'></span> DMC 3047 Yellow Beige-LT">#FFECD3</option>
+					<option data-content="<span class='colorBlock' style='background-color: #554900;'></span> DMC 3051 Green Grey-DK">#554900</option>
+					<option data-content="<span class='colorBlock' style='background-color: #898D72;'></span> DMC 3052 Green Grey--MD">#898D72</option>
+					<option data-content="<span class='colorBlock' style='background-color: #BBB394;'></span> DMC 3053 Green Grey">#BBB394</option>
+					<option data-content="<span class='colorBlock' style='background-color: #C2654C;'></span> DMC 3064 Sportsman Flsh-VY D">#C2654C</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E9E9DF;'></span> DMC 3072 Beaver Grey - VY LT">#E9E9DF</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFFFDC;'></span> DMC 3078 Golden Yellow-VY LT">#FFFFDC</option>
+					<option data-content="<span class='colorBlock' style='background-color: #CAE2E5;'></span> DMC 3325 Baby Blue-LT">#CAE2E5</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF9D96;'></span> DMC 3326 Rose-LT">#FF9D96</option>
+					<option data-content="<span class='colorBlock' style='background-color: #BC4055;'></span> DMC 3328 Salmon-DK">#BC4055</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF7B67;'></span> DMC 3340 Apricot-MD">#FF7B67</option>
+					<option data-content="<span class='colorBlock' style='background-color: #EBACA2;'></span> DMC 3341 Apricot">#EBACA2</option>
+					<option data-content="<span class='colorBlock' style='background-color: #616452;'></span> DMC 3345 Hunter Green-DK">#616452</option>
+					<option data-content="<span class='colorBlock' style='background-color: #78866B;'></span> DMC 3346 Hunter Green">#78866B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #809873;'></span> DMC 3347 Yellow Green-MD">#809873</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E1F9BE;'></span> DMC 3348 Yellow Green-LT">#E1F9BE</option>
+					<option data-content="<span class='colorBlock' style='background-color: #C94F5B;'></span> DMC 3350 Dusty Rose-ULT DK">#C94F5B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFD6D1;'></span> DMC 3354 Dusty Rose-LT">#FFD6D1</option>
+					<option data-content="<span class='colorBlock' style='background-color: #605F54;'></span> DMC 3362 Pine Green-DK">#605F54</option>
+					<option data-content="<span class='colorBlock' style='background-color: #747F60;'></span> DMC 3363 Pine Green-MD">#747F60</option>
+					<option data-content="<span class='colorBlock' style='background-color: #A1A787;'></span> DMC 3364 Pine Green">#A1A787</option>
+					<option data-content="<span class='colorBlock' style='background-color: #532510;'></span> DMC 3371 Black Brown">#532510</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E74F86;'></span> DMC 3607 Plum-LT">#E74F86</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F798B6;'></span> DMC 3608 Plum-VY LT">#F798B6</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFD6E5;'></span> DMC 3609 Plum-ULT LT">#FFD6E5</option>
+					<option data-content="<span class='colorBlock' style='background-color: #A1354F;'></span> DMC 3685 Mauve-DK">#A1354F</option>
+					<option data-content="<span class='colorBlock' style='background-color: #CB4E61;'></span> DMC 3687 Mauve">#CB4E61</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FA9790;'></span> DMC 3688 Mauve-MD">#FA9790</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFD5D8;'></span> DMC 3689 Mauve-LT">#FFD5D8</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF555B;'></span> DMC 3705 Melon-DK">#FF555B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF806D;'></span> DMC 3706 Melon-MD">#FF806D</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FED4DB;'></span> DMC 3708 Melon-LT">#FED4DB</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E6656B;'></span> DMC 3712 Salmon-MD">#E6656B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FDE5D9;'></span> DMC 3713 Salmon-VY LT">#FDE5D9</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFD3D4;'></span> DMC 3716 Dusty Rose-VY LT">#FFD3D4</option>
+					<option data-content="<span class='colorBlock' style='background-color: #B84B4D;'></span> DMC 3721 Shell Pink-DK">#B84B4D</option>
+					<option data-content="<span class='colorBlock' style='background-color: #B85958;'></span> DMC 3722 Shell Pink-MD">#B85958</option>
+					<option data-content="<span class='colorBlock' style='background-color: #C3767B;'></span> DMC 3726 Antique Mauve-DK">#C3767B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFC7C4;'></span> DMC 3727 Antique Mauve-LT">#FFC7C4</option>
+					<option data-content="<span class='colorBlock' style='background-color: #D15D67;'></span> DMC 3731 Dusty Rose-VY DK">#D15D67</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FF9A94;'></span> DMC 3733 Dusty Rose">#FF9A94</option>
+					<option data-content="<span class='colorBlock' style='background-color: #9C7D85;'></span> DMC 3740 Antique Violet-DK">#9C7D85</option>
+					<option data-content="<span class='colorBlock' style='background-color: #EBEBE7;'></span> DMC 3743 Antique Violet-VY L">#EBEBE7</option>
+					<option data-content="<span class='colorBlock' style='background-color: #9566A2;'></span> DMC 3746 Blue Violet-DK">#9566A2</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E6ECE8;'></span> DMC 3747 Blue Violet-VY LT">#E6ECE8</option>
+					<option data-content="<span class='colorBlock' style='background-color: #0C5B6C;'></span> DMC 3750 Antique Blue-VY DK">#0C5B6C</option>
+					<option data-content="<span class='colorBlock' style='background-color: #C2D1CE;'></span> DMC 3752 Antique Blue-VY LT">#C2D1CE</option>
+					<option data-content="<span class='colorBlock' style='background-color: #EDF7F7;'></span> DMC 3753 Ant. Blue-ULT VY LT">#EDF7F7</option>
+					<option data-content="<span class='colorBlock' style='background-color: #9EB0CE;'></span> DMC 3755 Baby Blue">#9EB0CE</option>
+					<option data-content="<span class='colorBlock' style='background-color: #F8F8FC;'></span> DMC 3756 Baby Blue-ULT VY LT">#F8F8FC</option>
+					<option data-content="<span class='colorBlock' style='background-color: #668E98;'></span> DMC 3760 Wedgewood">#668E98</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E3EAE6;'></span> DMC 3761 Sky Blue-LT">#E3EAE6</option>
+					<option data-content="<span class='colorBlock' style='background-color: #188086;'></span> DMC 3765 Peacock Blue-VY DK">#188086</option>
+					<option data-content="<span class='colorBlock' style='background-color: #18656F;'></span> DMC 3766 Peacock Blue-LT">#18656F</option>
+					<option data-content="<span class='colorBlock' style='background-color: #5C6E6C;'></span> DMC 3768 Grey Green-DK">#5C6E6C</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFFAE0;'></span> DMC 3770 Flesh-VY LT">#FFFAE0</option>
+					<option data-content="<span class='colorBlock' style='background-color: #AD533E;'></span> DMC 3772 Negro Flesh">#AD533E</option>
+					<option data-content="<span class='colorBlock' style='background-color: #E78667;'></span> DMC 3773 Sportsman Flsh-MD">#E78667</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFDCC1;'></span> DMC 3774 Sportsman Flsh-VY L">#FFDCC1</option>
+					<option data-content="<span class='colorBlock' style='background-color: #DD6D5B;'></span> DMC 3776 Mahogony-LT">#DD6D5B</option>
+					<option data-content="<span class='colorBlock' style='background-color: #BF4024;'></span> DMC 3777 Terra Cotta-VY DK">#BF4024</option>
+					<option data-content="<span class='colorBlock' style='background-color: #ED7A64;'></span> DMC 3778 Terra Cotta-LT">#ED7A64</option>
+					<option data-content="<span class='colorBlock' style='background-color: #FFB198;'></span> DMC 3779 Ter. Cotta-ULT VY L">#FFB198</option>
+					<option data-content="<span class='colorBlock' style='background-color: #71472A;'></span> DMC 3781 Mocha Brown-DK">#71472A</option>
+					<option data-content="<span class='colorBlock' style='background-color: #CEAF90;'></span> DMC 3782 Mocho Brown-LT">#CEAF90</option>
+					<option data-content="<span class='colorBlock' style='background-color: #8B6D73;'></span> DMC 3787 Brown Grey - DK">#8B6D73</option>
+					<option data-content="<span class='colorBlock' style='background-color: #8C756D;'></span> DMC 3790 Beige Grey - ULT DK">#8C756D</option>
+					<option data-content="<span class='colorBlock' style='background-color: #514C53;'></span> DMC 3799 Pewter Grey - VY DK">#514C53</option>
+				</select>
+
+				<!--<button type="button" class="btn btn-default" name="refresh">-->
+					<!--<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh-->
+				<!--</button>-->
+				<button type="button" class="btn btn-default" name="clear">
+					<span class="glyphicon glyphicon-erase" aria-hidden="true"></span> Clear All
+				</button>
+				<a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalEditSettings">
+					<span class="glyphicon glyphicon-star" aria-hidden="true"></span> Settings
+				</a>
+				<button type="button" class="btn btn-default" name="image">
+					<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Image
+				</button>
+				<button type="button" class="btn btn-default" name="save">
+					<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save
+				</button>
+				<button type="button" class="btn btn-default" name="export">
+					<span class="glyphicon glyphicon-export" aria-hidden="true"></span> Export
+				</button>
+
+				<select id="modepicker" class="selectpicker">
+					<option data-content="<span class='glyphicon glyphicon-stop'></span> Full stitch">full</option>
+					<option data-content="<span class='glyphicon glyphicon-menu-down'></span> Half stitch 1">half1</option>
+					<option data-content="<span class='glyphicon glyphicon-menu-left'></span> Half stitch 2">half2</option>
+					<option data-content="<span class='glyphicon glyphicon-menu-right'></span> Half stitch 3">half3</option>
+					<option data-content="<span class='glyphicon glyphicon-menu-up'></span> Half stitch 4">half4</option>
+					<option data-content="<span class='glyphicon glyphicon-minus'></span> Backstitch">outline</option>
+					<option data-content="<span class='glyphicon glyphicon-remove'></span> Pan stitching area">pan</option>
+					<option data-content="<span class='glyphicon glyphicon-erase'></span> Remove stitches">erase</option>
+					<option data-content="<span class='glyphicon glyphicon-paperclip'></span> Select stitches">select</option>
+				</select>
+
+				<!--<br>-->
+				<!--<label>Width: <input type="number" name="width"></label>-->
+				<!--<label>Height: <input type="number" name="height"></label>-->
+
+				<!--<input id="create-your-own" name="create" type="button" value="New"><br>-->
+				<!--<input id="savebtn" name="save" type="button" value="Save">-->
+
+			</div>
+		</div>
+
+
+		<div id="canvas-outer">
+			<!--<ul class="rulerTop"><li>1</li><li>2</li><li>3</li><li>4</li></ul>-->
+			<div id="canvas-wrapper">
+				<canvas width="1180" height="573" class="stitcher" id="stitcher"></canvas>
+			</div>
+		</div>
+	</div>					
+
+	<!--<input id="touch-toggle" name="touch-toggle" type="button">-->
+
+	<!-- Modal Edit Settings -->
+	<div class="modal fade" id="modalEditSettings" tabindex="-1" role="dialog" aria-labelledby="modalEditSettingsLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Settings</h4>
+				</div>
+				<form role='form' class='form-horizontal' action='#' method='post'>
+					<div class="modal-body">
+						<div class="form-group row">
+							<label for="chartWidth" class="col-xs-2 col-form-label">Width</label>
+							<div class="col-xs-10">
+								<input type="number" class="form-control" id="chartWidth" name="chartWidth">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="chartHeight" class="col-xs-2 col-form-label">Height</label>
+							<div class="col-xs-10">
+								<input type="number" class="form-control" id="chartHeight" name="chartHeight">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						<input class='btn btn-primary saveChanges' type='submit' value='Update'/>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-select.min.js"></script>
+	<script src="main.js"></script>
+
+	<script type="text/javascript">
+
+	</script>
+
+</body></html>
