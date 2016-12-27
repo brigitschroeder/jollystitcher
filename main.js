@@ -173,6 +173,9 @@ function stitcher(canvas) {
     this.xDot = 100;
     this.yDot = 100;
 
+	$('#chartWidth').val(this.xDot);
+	$('#chartHeight').val(this.yDot);
+
 	this._grid = [];
 
 	var imageid = jQuery.getQuery('imageid');
@@ -397,7 +400,7 @@ stitcher.prototype.refresh = function() {
     // this._radius = Math.floor(this.canvas.width / 130);
     // this._distDot = Math.floor(2 * this._radius + (0.4 * this._radius));
     this._drawGridlines();
-	//draw pegs
+	//draw stitches
 	for(var i=0; i<this.dots; i++) {
 		var x = i % this.xDot;
 		var y = Math.floor(i / this.xDot) % this.yDot;
@@ -431,6 +434,8 @@ stitcher.prototype.resize = function(x, y) {
     this.xDot = x;
     this.yDot = y;
     this._grid = newgrid;
+	$('#chartWidth').val(x);
+	$('#chartHeight').val(y);
 };
 stitcher.prototype.clear = function() {
 	for(var i=0; i<this.dots; i++) {
@@ -520,6 +525,16 @@ stitcher.prototype._drawGridlines = function() {
 
     this.ctx.closePath();
     this.ctx.stroke();
+
+	// mark middle of pattern
+	this.ctx.beginPath();
+	this.ctx.strokeStyle = "#000000";
+	this.ctx.moveTo(21*Math.floor(this.xDot/2) -2, 0);
+	this.ctx.lineTo(21*Math.floor(this.xDot/2) -2, 21 * this.yDot);
+	this.ctx.moveTo(0, 21*Math.floor(this.yDot/2) -2);
+	this.ctx.lineTo(21 * this.xDot, 21*Math.floor(this.yDot/2) -2);
+	this.ctx.closePath();
+	this.ctx.stroke();
 
     // this.refreshReady = true;
 };
