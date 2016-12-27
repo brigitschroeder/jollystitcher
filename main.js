@@ -162,7 +162,7 @@ stitcher.prototype.load = function(imageid) {
 
 function stitcher(canvas) {
 
-	this.refreshReady = true;
+	this.refreshReady = false;
 	self = this;
 	this.refreshTimer = setInterval(function() { self.updateTimer(); }, 120);
 
@@ -176,13 +176,14 @@ function stitcher(canvas) {
 	$('#chartWidth').val(this.xDot);
 	$('#chartHeight').val(this.yDot);
 
-	this._grid = [];
+	// this._grid = [];
+    this.stitches = [];
 
 	var imageid = jQuery.getQuery('imageid');
 	if (imageid.length > 0){	
 		this.load(imageid);
 	}
-	this.refreshReady = true;
+	// this.refreshReady = true;
 
     this._radius = 9;
     this._distDot = 21; // distance between midpoints of each square
@@ -206,7 +207,7 @@ function stitcher(canvas) {
 	// Initialize with default image 
 	// this._grid = ['b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','v','b','v','b','b','b','b','v','b','v','b','b','b','b','v','b','v','w','w','b','b','v','b','v','b','b','b','b','v','b','v','b','b','b','b','v','b','v','b','b','n','b','b','b','b','b','v','v','b','b','b','b','b','v','v','b','b','b','b','b','v','v','w','w','w','b','b','v','v','b','b','b','b','b','v','v','b','b','b','b','b','v','v','b','b','b','v','b','b','v','v','b','v','v','b','b','v','v','b','v','v','b','b','v','v','b','v','w','w','b','v','v','b','v','w','w','w','w','v','b','v','v','b','b','v','v','b','v','v','b','n','b','b','b','b','b','v','v','b','b','b','b','b','v','v','b','b','b','b','b','v','v','b','b','b','b','b','v','v','b','b','b','w','w','w','v','b','b','b','b','b','v','v','b','b','b','b','b','b','b','v','b','v','b','b','b','b','v','b','v','b','b','b','b','v','b','v','b','b','b','b','v','b','v','b','b','b','b','w','w','v','b','b','b','b','v','b','v','b','b','n','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','w','w','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','w','w','w','w','w','b','w','w','w','w','b','b','b','w','w','b','b','b','b','b','b','b','b','b','b','n','b','v','b','v','b','b','b','b','v','b','v','b','b','b','b','v','b','v','w','w','w','w','w','w','w','w','b','b','w','w','w','v','w','w','b','b','v','b','v','b','b','b','b','v','b','b','v','v','b','b','b','b','b','v','v','b','b','b','b','b','v','v','w','w','w','w','w','w','w','w','w','w','b','b','w','w','w','w','b','b','b','v','v','b','b','b','b','b','v','n','v','v','b','v','v','b','b','v','v','b','v','v','b','b','v','v','b','w','w','w','w','w','w','w','w','w','w','w','v','v','w','w','w','b','b','v','v','b','v','v','b','b','v','v','b','b','v','v','b','b','b','b','b','v','v','b','b','b','b','w','v','w','w','w','w','w','w','w','w','w','w','w','w','b','v','w','w','w','b','b','b','v','v','b','b','b','b','b','v','n','b','v','b','v','b','b','b','b','v','b','v','b','b','w','w','v','w','w','w','w','w','w','w','w','w','w','w','w','w','v','w','w','w','w','b','b','v','b','v','b','b','b','b','v','b','b','b','b','b','b','b','b','b','b','b','b','b','w','w','b','b','w','w','w','w','w','w','w','w','w','w','w','w','b','w','w','w','w','w','b','b','b','b','b','b','b','b','b','b','n','b','b','b','b','b','b','b','b','b','b','b','w','w','w','b','b','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','b','w','w','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','v','b','v','b','b','b','w','w','w','v','b','b','w','w','w','w','w','w','w','w','w','w','w','w','b','b','b','w','w','w','v','b','b','b','b','v','b','v','b','b','n','b','b','b','b','b','v','v','b','b','b','b','w','w','v','b','b','b','w','w','w','w','w','w','w','w','w','w','w','b','b','b','w','w','w','v','b','b','b','b','b','v','v','b','b','b','v','b','b','v','v','b','v','v','b','b','w','w','w','v','v','b','b','w','w','w','w','w','w','w','w','w','w','v','v','b','w','w','w','b','v','v','b','b','v','v','b','v','v','b','n','b','b','b','b','b','v','v','b','b','b','b','w','w','w','b','b','b','b','w','w','w','w','w','w','w','w','w','v','b','b','w','w','w','v','v','b','b','b','b','b','v','v','b','b','b','b','b','b','b','v','b','v','b','b','b','b','w','w','w','w','w','b','b','b','w','w','w','w','w','w','v','b','v','w','w','w','b','v','b','v','b','b','b','b','v','b','v','b','b','n','b','b','b','b','b','b','b','b','b','b','b','b','b','b','w','w','w','w','w','b','b','b','b','b','b','b','b','b','w','w','w','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','w','w','w','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','n','b','v','b','v','b','b','b','b','v','b','v','b','b','b','b','v','b','v','b','b','b','b','v','b','v','b','w','w','w','v','b','v','b','b','b','b','v','b','v','b','b','b','b','v','b','b','v','v','b','b','b','b','b','v','v','b','b','b','b','b','v','v','b','b','b','b','b','v','v','w','w','w','b','b','v','v','b','b','b','b','b','v','v','b','b','b','b','b','v','n','v','v','b','v','v','b','b','v','v','b','v','v','b','b','v','v','b','v','v','b','b','v','v','w','w','w','w','b','v','v','b','v','v','b','b','v','v','b','v','v','b','b','v','v','b','b','v','v','b','b','b','b','b','v','v','b','b','b','b','b','v','v','b','b','b','w','w','w','w','w','b','b','b','b','v','v','b','b','b','b','b','v','v','b','b','b','b','b','v','n','b','v','b','v','b','b','b','b','v','b','v','b','b','b','b','v','b','v','b','w','w','w','w','w','v','b','b','b','b','v','b','v','b','b','b','b','v','b','v','b','b','b','b','v','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','b','n'];
 	// $('#create-your-own').show();
-	this.refreshReady = true;
+	// this.refreshReady = true;
 	
 	jQuery(this.canvas).select(function () { return false; });
 	jQuery(this.canvas).mouseup(jQuery.proxy(this._onCanvasMouseUp, this));
@@ -353,7 +354,7 @@ function stitcher(canvas) {
 	  }
 	}, false);
     */
-	this.refreshReady = true;
+	// this.refreshReady = true;
 }
 
 /*
@@ -373,19 +374,17 @@ stitcher.prototype.picture = function(picture) {
 	if (picture === undefined) {
 		return {
 			xDot: this.xDot, 
-			yDot: this.yDot, 
-			grid: this._grid 
+			yDot: this.yDot
 		};
 	} else {
 		this._xDot = picture.xDot;
-		this._yDot = picture.yDot;
-		this._grid = picture.grid;
+		this._yDot = picture.yDot
 	}
 	this.refreshReady = true;
 };
 
 stitcher.prototype.refresh = function() {
-	// console.log('refreshing...');
+	console.log('refreshing...');
 	this.ctx = this.canvas.getContext('2d');
 	this.ctx.clearRect(
 		0, 0, 
@@ -405,7 +404,18 @@ stitcher.prototype.refresh = function() {
 		var x = i % this.xDot;
 		var y = Math.floor(i / this.xDot) % this.yDot;
 		
-		this._draw(x, y, this._grid[i]);
+		// this._draw(x, y, this._grid[i]);
+        this._draw(x, y, this.stitches[i].full, 'full');
+        this._draw(x, y, this.stitches[i].halfL, 'halfL');
+        this._draw(x, y, this.stitches[i].halfR, 'halfR');
+        this._draw(x, y, this.stitches[i].tqBL, 'tqBL');
+        this._draw(x, y, this.stitches[i].tqBR, 'tqBR');
+        this._draw(x, y, this.stitches[i].tqTL, 'tqTL');
+        this._draw(x, y, this.stitches[i].tqTR, 'tqTR');
+        this._draw(x, y, this.stitches[i].qBL, 'qBL');
+        this._draw(x, y, this.stitches[i].qBR, 'qBR');
+        this._draw(x, y, this.stitches[i].qTL, 'qTL');
+        this._draw(x, y, this.stitches[i].qTR, 'qTR');
 	}
 
 };
@@ -414,7 +424,7 @@ stitcher.prototype.color = function(a) {
 };
 stitcher.prototype.mode = function(a) {
     this._mode = a;
-    console.log(this._mode);
+    // console.log(this._mode);
 };
 stitcher.prototype.resize = function(x, y) {
     // console.log("x = "+ x +", y = "+y);
@@ -426,20 +436,45 @@ stitcher.prototype.resize = function(x, y) {
         // set equal to current grid
         var currIndex = (row - 1) * this.xDot + (col - 1);
         if (currIndex <= this.dots && row <= this.yDot && col <= this.xDot) {
-            newgrid[j] = this._grid[currIndex];
+            newgrid[j] = this.stitches[currIndex];
         } else {
-            newgrid[j] = 'transparent';
+            newgrid[j] = {
+                full:'transparent',
+                halfL:'transparent',
+                halfR:'transparent',
+                tqBL:'transparent',
+                tqBR:'transparent',
+                tqTL:'transparent',
+                tqTR:'transparent',
+                qBL:'transparent',
+                qBR:'transparent',
+                qTL:'transparent',
+                qTR:'transparent'
+            };
         }
     }
     this.xDot = x;
     this.yDot = y;
-    this._grid = newgrid;
+    this.stitches = newgrid;
 	$('#chartWidth').val(x);
 	$('#chartHeight').val(y);
 };
 stitcher.prototype.clear = function() {
 	for(var i=0; i<this.dots; i++) {
-		this._grid[i] = 'transparent';
+		// this._grid[i] = 'transparent';
+        this.stitches[i] = {
+            full:'transparent',
+            halfL:'transparent',
+            halfR:'transparent',
+            tqBL:'transparent',
+            tqBR:'transparent',
+            tqTL:'transparent',
+            tqTR:'transparent',
+            qBL:'transparent',
+            qBR:'transparent',
+            qTL:'transparent',
+            qTR:'transparent'
+        };
 	}
 	// this.refreshReady = true;
     this.refresh();
@@ -448,7 +483,20 @@ stitcher.prototype.clear = function() {
 
 stitcher.prototype.create = function() {
 	for(var i=0; i<this.dots; i++) {
-		this._grid[i] = 'transparent';
+		// this._grid[i] = 'transparent';
+        this.stitches[i] = {
+            full:'transparent',
+            halfL:'transparent',
+            halfR:'transparent',
+            tqBL:'transparent',
+            tqBR:'transparent',
+            tqTL:'transparent',
+            tqTR:'transparent',
+            qBL:'transparent',
+            qBR:'transparent',
+            qTL:'transparent',
+            qTR:'transparent'
+        };
 	}
 	//this.refreshReady = true;
 	this.refresh();
@@ -462,17 +510,8 @@ stitcher.prototype.save = function() {
 
 };
 
-stitcher.prototype._draw = function(x, y, colorName) {
-	if (colorName == 'transparent'){
-		this.ctx.strokeStyle = "#00e0ff";
-	} else {
-		this.ctx.strokeStyle = colorName;
-	}
-	
-	this.ctx.lineWidth = 1;
-	
-	this.ctx.beginPath();
-	
+stitcher.prototype._draw = function(x, y, colorName, stitchType) {
+
 	if (x >= this.xDot | y >= this.yDot) {
 		return ;
 	}
@@ -480,29 +519,93 @@ stitcher.prototype._draw = function(x, y, colorName) {
 	if (x < 0 | y < 0) {
 		return ;
 	}
-	
-	this._grid[x + (y * this.xDot)] = colorName;
+
+	// this._grid[x + (y * this.xDot)] = colorName;
+    this.stitches[x + (y * this.xDot)][stitchType] = colorName;
 
 	this.ctx.fillStyle = colorName;
+    this.ctx.beginPath();
 
-	this.ctx.rect(
-		(x * this._distDot),
-		(y * this._distDot),
-		this._radius * 2,
-		this._radius * 2
-	);
-	this.ctx.closePath();
+    if (stitchType == 'full'){ // Full stitich
+        this.ctx.rect(x * this._distDot, y * this._distDot, this._radius * 2, this._radius * 2);
+    } else if(stitchType == 'halfL'){ // Half stitch left
+        this.ctx.moveTo(x * this._distDot, y * this._distDot + this._radius * 2);
+        this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot + this._radius * 2);
+        this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius);
+        this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot);
+        this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot);
+        this.ctx.lineTo(x * this._distDot, y * this._distDot + this._radius);
+    } else if(stitchType == 'halfR'){ // Half stitch right
+        this.ctx.moveTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius * 2);
+        this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot + this._radius * 2);
+        this.ctx.lineTo(x * this._distDot, y * this._distDot + this._radius);
+        this.ctx.lineTo(x * this._distDot, y * this._distDot);
+        this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot);
+        this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius);
+    } else if(stitchType == 'tqBL'){ // Three quarter stitch bottom left
+        this.ctx.moveTo(x * this._distDot, y * this._distDot + this._radius * 2);
+        this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius * 2);
+        this.ctx.lineTo(x * this._distDot, y * this._distDot);
+    } else if(stitchType == 'tqBR'){ // Three quarter stitch bottom right
+        this.ctx.moveTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius * 2);
+        this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot);
+        this.ctx.lineTo(x * this._distDot, y * this._distDot + this._radius * 2);
+    } else if(stitchType == 'tqTL'){ // Three quarter stitch top left
+        this.ctx.moveTo(x * this._distDot, y * this._distDot);
+        this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot);
+        this.ctx.lineTo(x * this._distDot, y * this._distDot + this._radius * 2);
+    } else if(stitchType == 'tqTR'){ // Three quarter stitch top right
+        this.ctx.moveTo(x * this._distDot + this._radius * 2, y * this._distDot);
+        this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius * 2);
+        this.ctx.lineTo(x * this._distDot, y * this._distDot);
+    } else if(stitchType == 'qBL'){ // Quarter stitch bottom left
+        this.ctx.moveTo(x * this._distDot, y * this._distDot + this._radius * 2);
+        this.ctx.lineTo(x * this._distDot, y * this._distDot + this._radius);
+        this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot + this._radius);
+        this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot + this._radius * 2);
+    } else if(stitchType == 'qBR'){ // Quarter stitch bottom right
+        this.ctx.moveTo(x * this._distDot + this._radius, y * this._distDot + this._radius * 2);
+        this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot + this._radius);
+        this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius);
+        this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius * 2);
+    } else if(stitchType == 'qTL'){ // Quarter stitch top left
+        this.ctx.moveTo(x * this._distDot, y * this._distDot + this._radius);
+        this.ctx.lineTo(x * this._distDot, y * this._distDot);
+        this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot);
+        this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot + this._radius);
+    } else if(stitchType == 'qTR'){ // Quarter stitch top right
+        this.ctx.moveTo(x * this._distDot + this._radius, y * this._distDot + this._radius);
+        this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot);
+        this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot);
+        this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius);
+    }
+
+    this.ctx.closePath();
 	this.ctx.fill();
-	this.ctx.stroke();
 
-	// this.refreshReady = true;
 };
 
 stitcher.prototype._drawGridlines = function() {
 
+    // grid
     this.ctx.strokeStyle = "#00e0ff";
-    this.ctx.lineWidth = 3;
+    this.ctx.lineWidth = 1;
+    this.ctx.beginPath();
+    for(var i=0; i<this.dots; i++) {
+        var x = i % this.xDot;
+        var y = Math.floor(i / this.xDot) % this.yDot;
+        this.ctx.rect(
+            (x * this._distDot),
+            (y * this._distDot),
+            this._radius * 2,
+            this._radius * 2
+        );
+        this.ctx.closePath();
+    }
 
+    this.ctx.stroke();
+
+    this.ctx.lineWidth = 3;
     this.ctx.beginPath();
 
     this.ctx.moveTo(1, 0);
@@ -556,8 +659,9 @@ stitcher.prototype._onCanvasMouseClick = function(event) {
 
 stitcher.prototype._onCanvasMouseMove = function(event) {
 	this._drawUsingMouseEvent(event);
-	if(this._mouseDown == true)
-	    this.refreshReady = true;
+	if(this._mouseDown == true){
+        // this.refreshReady = true;
+    }
 };
 
 stitcher.prototype._drawUsingMouseEvent = function(event) {
@@ -574,8 +678,8 @@ stitcher.prototype._drawUsingMouseEvent = function(event) {
     if (this._mouseDown === true) {
         var x = Math.floor(relX / this._distDot);
         var y = Math.floor(relY / this._distDot);
-        this._draw(x, y, this._color);
-        this.refreshReady = true;
+        this._draw(x, y, this._color, this._mode);
+        // this.refreshReady = true;
     }
 };
 
