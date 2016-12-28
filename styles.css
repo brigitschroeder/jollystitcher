@@ -127,14 +127,7 @@ textarea#info {
   display: inline-block;
   margin: 15px 0;
 }
-#share-box {
-  margin: 0 auto;
-  width: 403px;
-  max-width: calc(90% - 20px);
-  padding: 10px;
-  background-color: #ffffff;
-  display: none;
-}
+
 #create-your-own {
   display: none;
 }
@@ -142,22 +135,11 @@ textarea#info {
   text-align: left;
   margin-top: 10px;
 }
-.btn-share {
-  display: inline-block;
-  margin: 15px 0;
-}
+
 #stitcher-twin {
   visibility: hidden;
 }
-#incoming-message {
-  position: absolute;
-  top: 40px;
-  left: calc(50% - 150px);
-  width: 300px;
-}
-#audiojs_wrapper0 {
-  margin: 30px auto 10px ;
-}
+
 .modeImg {
     position: relative;
     bottom: 2px;
@@ -171,6 +153,6 @@ textarea#info {
     position:absolute;
     top:0px;
     left:0px;
-    z-index: 999;
+    z-index: 1;
 }
 

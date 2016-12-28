@@ -1,5 +1,112 @@
 IndexController = function() {};
 
+// Begin outlines code
+Number.prototype.roundTo = function(num) {
+    var resto = this%num;
+    if (resto <= (num/2)) {
+        return this-resto;
+    } else {
+        return this+num-resto;
+    }
+};
+
+var outlineCanvas = document.getElementById("outlines");
+var outlineCtx = outlineCanvas.getContext("2d");
+var outlineCanvasTemp = document.getElementById("outlinesTemp");
+var outlineCtxTemp = outlineCanvasTemp.getContext("2d");
+var startX;
+var startY;
+var isDown = false;
+
+outlineCanvas.width = 21 * $('#chartWidth').val();
+outlineCanvasTemp.width = 21 * $('#chartWidth').val();
+outlineCanvas.height = 21 * $('#chartHeight').val();
+outlineCanvasTemp.height = 21 * $('#chartHeight').val();
+
+var offsetLeftValue = -21 * $('#chartWidth').val() - 100;
+
+$("#outlinesTemp").css({
+    left: offsetLeftValue,
+    top: 0
+});
+
+function drawLine(toX, toY, context) {
+    context.lineWidth = 3;
+    context.strokeStyle = jQuery("#threadpicker").val();
+    context.beginPath();
+    context.moveTo(startX.roundTo(21) - 2, startY.roundTo(21) - 2);
+    context.lineTo(toX.roundTo(21) - 2, toY.roundTo(21) - 2);
+    context.stroke();
+}
+
+function drawKnot(toX, toY, context) {
+    context.fillStyle = jQuery("#threadpicker").val();
+    context.beginPath();
+    context.arc(toX, toY, 4, 0, 2*Math.PI, false);
+    context.fill();
+}
+
+function outlineMouseDown(e) {
+    e.preventDefault();
+    // mouseX = parseInt(e.clientX - offsetX);
+    // mouseY = parseInt(e.clientY - offsetY);
+    mouseX = e.pageX - $("#outlines").offset().left;
+    mouseY = e.pageY - $("#outlines").offset().top;
+
+    if (jQuery("#modepicker").val() == 'outline'){
+        isDown = !isDown;
+
+        if (isDown == true){
+            startX = mouseX;
+            startY = mouseY;
+            outlineCtxTemp.clearRect(0, 0, outlineCanvasTemp.width, outlineCanvasTemp.height);
+            $("#outlinesTemp").css({
+                left: 0,
+                top: 0
+            });
+        }
+        if (isDown == false){
+            // mouseX = parseInt(e.clientX - offsetX);
+            // mouseY = parseInt(e.clientY - offsetY);
+            mouseX = e.pageX - $("#outlines").offset().left;
+            mouseY = e.pageY - $("#outlines").offset().top;
+            $("#outlinesTemp").css({
+                left: offsetLeftValue,
+                top: 0
+            });
+            drawLine(mouseX, mouseY, outlineCtx);
+        }
+    }
+    else {
+        isDown = false;
+        //french knot
+        drawKnot(mouseX, mouseY, outlineCtx);
+    }
+
+
+}
+
+function outlineMouseMove(e) {
+    e.preventDefault();
+    if (!isDown) {
+        return;
+    }
+    // mouseX = parseInt(e.clientX - offsetX);
+    // mouseY = parseInt(e.clientY - offsetY);
+    mouseX = e.pageX - $("#outlines").offset().left;
+    mouseY = e.pageY - $("#outlines").offset().top;
+    outlineCtxTemp.clearRect(0, 0, outlineCanvasTemp.width, outlineCanvasTemp.height);
+    drawLine(mouseX, mouseY, outlineCtxTemp);
+}
+
+$("#outlines").mousedown(function (e) {
+    outlineMouseDown(e);
+});
+$("#outlines").mousemove(function (e) {
+    outlineMouseMove(e);
+});
+// end outlines code
+
 IndexController.prototype.start = function() {
 	this._stitchers = jQuery(document).find('.stitcher');
 	this._stitchers.stitcher();
@@ -23,7 +130,7 @@ IndexController.prototype._updateMode = function() {
     var modeValue = jQuery("#modepicker").val();
     this._stitchers.stitcher('mode', modeValue);
 
-    $('#outlines').css('z-index', 999);
+    $('#outlines').css('z-index', 1);
     $('#stitcher').css('z-index', 0);
     if (modeValue == 'outline' || modeValue == 'knot') {
         // $('#outlines').css('z-index', 999);
@@ -41,8 +148,7 @@ IndexController.prototype._updateSettings = function() {
     var chartWidth = jQuery("#chartWidth").val();
     var chartHeight = jQuery("#chartHeight").val();
     this._stitchers.stitcher('resize', chartWidth, chartHeight);
-    console.log(chartWidth + " x " + chartHeight);
-
+    // console.log(chartWidth + " x " + chartHeight);
     this._stitchers.stitcher('refresh');
     // this.xDot = chartWidth;
     // this.yDot = chartHeight;
@@ -60,6 +166,17 @@ $('.saveChanges').click(function (e) {
         chartWidth = $('#chartWidth').val();
         chartHeight = $('#chartHeight').val();
         $('#modalEditSettings').modal('hide');
+
+        // copy outlines over to temp canvas
+        outlineCtxTemp.drawImage(outlineCanvas, 0, 0);
+        // resize main outlines canvas (clears image)
+        outlineCanvas.width = 21 * chartWidth;
+        outlineCanvas.height = 21 * chartHeight;
+        // copy outlines back over to main outlines canvas
+        outlineCtx.drawImage(outlineCanvasTemp, 0, 0);
+        // resize temp canvas (clears image)
+        outlineCanvasTemp.width = 21 * chartWidth;
+        outlineCanvasTemp.height = 21 * chartHeight;
     }
     // stop the form from submitting the normal way and refreshing the page
     e.preventDefault();
@@ -889,103 +1006,6 @@ stitcher.prototype.updateTimer = function() {
     }    
   };
 
-  // Begin outlines code
-    Number.prototype.roundTo = function(num) {
-        var resto = this%num;
-        if (resto <= (num/2)) {
-            return this-resto;
-        } else {
-            return this+num-resto;
-        }
-    };
 
-    var outlineCanvas = document.getElementById("outlines");
-    var outlineCtx = outlineCanvas.getContext("2d");
-    var outlineCanvasTemp = document.getElementById("outlinesTemp");
-    var outlineCtxTemp = outlineCanvasTemp.getContext("2d");
-    var startX;
-    var startY;
-    var isDown = false;
-
-    $("#outlinesTemp").css({
-        left: -1200,
-        top: 0
-    });
-
-    function drawLine(toX, toY, context) {
-        context.lineWidth = 3;
-        context.strokeStyle = jQuery("#threadpicker").val();
-        context.beginPath();
-        context.moveTo(startX.roundTo(21) - 2, startY.roundTo(21) - 2);
-        context.lineTo(toX.roundTo(21) - 2, toY.roundTo(21) - 2);
-        context.stroke();
-    }
-
-    function drawKnot(toX, toY, context) {
-        context.fillStyle = jQuery("#threadpicker").val();
-        context.beginPath();
-        context.arc(toX, toY, 4, 0, 2*Math.PI, false);
-        context.fill();
-    }
-
-    function outlineMouseDown(e) {
-        e.preventDefault();
-        // mouseX = parseInt(e.clientX - offsetX);
-        // mouseY = parseInt(e.clientY - offsetY);
-        mouseX = e.pageX - $("#outlines").offset().left;
-        mouseY = e.pageY - $("#outlines").offset().top;
-
-        if (jQuery("#modepicker").val() == 'outline'){
-            isDown = !isDown;
-
-            if (isDown == true){
-                startX = mouseX;
-                startY = mouseY;
-                outlineCtxTemp.clearRect(0, 0, outlineCanvasTemp.width, outlineCanvasTemp.height);
-                $("#outlinesTemp").css({
-                    left: 0,
-                    top: 0
-                });
-            }
-            if (isDown == false){
-                // mouseX = parseInt(e.clientX - offsetX);
-                // mouseY = parseInt(e.clientY - offsetY);
-                mouseX = e.pageX - $("#outlines").offset().left;
-                mouseY = e.pageY - $("#outlines").offset().top;
-                $("#outlinesTemp").css({
-                    left: -1200,
-                    top: 0
-                });
-                drawLine(mouseX, mouseY, outlineCtx);
-            }
-        }
-        else {
-            isDown = false;
-            //french knot
-            drawKnot(mouseX, mouseY, outlineCtx);
-        }
-
-
-    }
-
-    function outlineMouseMove(e) {
-        e.preventDefault();
-        if (!isDown) {
-            return;
-        }
-        // mouseX = parseInt(e.clientX - offsetX);
-        // mouseY = parseInt(e.clientY - offsetY);
-        mouseX = e.pageX - $("#outlines").offset().left;
-        mouseY = e.pageY - $("#outlines").offset().top;
-        outlineCtxTemp.clearRect(0, 0, outlineCanvasTemp.width, outlineCanvasTemp.height);
-        drawLine(mouseX, mouseY, outlineCtxTemp);
-    }
-
-    $("#outlines").mousedown(function (e) {
-        outlineMouseDown(e);
-    });
-    $("#outlines").mousemove(function (e) {
-        outlineMouseMove(e);
-    });
 
 })( jQuery );
