@@ -10,6 +10,7 @@ IndexController.prototype.start = function() {
     jQuery(".stitcherUI button").click(jQuery.proxy(this._onActionClick, this));
 	
 	this._updateColor();
+    this._updateMode();
 };
 
 IndexController.prototype._updateColor = function() {
@@ -21,6 +22,19 @@ IndexController.prototype._updateColor = function() {
 IndexController.prototype._updateMode = function() {
     var modeValue = jQuery("#modepicker").val();
     this._stitchers.stitcher('mode', modeValue);
+
+    $('#outlines').css('z-index', 999);
+    $('#stitcher').css('z-index', 0);
+    if (jQuery("#modepicker").val() == 'outline') {
+        // $('#outlines').css('z-index', 999);
+        // $('#stitcher').css('z-index', 0);
+        $('#outlines').css('pointer-events', 'all');
+    } else {
+        // $('#stitcher').css('z-index', 999);
+        // $('#outlines').css('z-index', 0);
+        $('#outlines').css('pointer-events', 'none');
+    }
+
     return false;
 };
 IndexController.prototype._updateSettings = function() {
@@ -42,15 +56,10 @@ IndexController.prototype._onActionClick = function(event) {
 
 $('.saveChanges').click(function (e) {
     var modalName = $(this).parents('.modal').attr('id');
-    // var c = $('#stitcher');
-    //Resize room
     if (modalName == 'modalEditSettings'){
         chartWidth = $('#chartWidth').val();
         chartHeight = $('#chartHeight').val();
         $('#modalEditSettings').modal('hide');
-        // console.log(chartWidth + " x " + chartHeight);
-        // c.xDot = chartWidth;
-        // c.yDot = chartHeight;
     }
     // stop the form from submitting the normal way and refreshing the page
     e.preventDefault();
@@ -384,6 +393,7 @@ stitcher.prototype.picture = function(picture) {
 };
 
 stitcher.prototype.refresh = function() {
+    var self = this;
 	console.log('refreshing...');
 	this.ctx = this.canvas.getContext('2d');
 	this.ctx.clearRect(
@@ -405,7 +415,7 @@ stitcher.prototype.refresh = function() {
 		var y = Math.floor(i / this.xDot) % this.yDot;
 		
 		// this._draw(x, y, this._grid[i]);
-        this._draw(x, y, this.stitches[i].full, 'full');
+        /*this._draw(x, y, this.stitches[i].full, 'full');
         this._draw(x, y, this.stitches[i].halfL, 'halfL');
         this._draw(x, y, this.stitches[i].halfR, 'halfR');
         this._draw(x, y, this.stitches[i].tqBL, 'tqBL');
@@ -415,7 +425,14 @@ stitcher.prototype.refresh = function() {
         this._draw(x, y, this.stitches[i].qBL, 'qBL');
         this._draw(x, y, this.stitches[i].qBR, 'qBR');
         this._draw(x, y, this.stitches[i].qTL, 'qTL');
-        this._draw(x, y, this.stitches[i].qTR, 'qTR');
+        this._draw(x, y, this.stitches[i].qTR, 'qTR');*/
+
+        var modes = ["full", "halfL", "halfR", "tqBL", "tqBR", "tqTL", "tqTR", "qBL", "qBR", "qTL", "qTR"];
+        modes.forEach(function(mode) {
+            if(self.stitches[i][mode] != 'transparent'){
+                self._draw(x, y, self.stitches[i][mode], mode);
+            }
+        });
 	}
 
 };
@@ -526,58 +543,153 @@ stitcher.prototype._draw = function(x, y, colorName, stitchType) {
 	this.ctx.fillStyle = colorName;
     this.ctx.beginPath();
 
-    if (stitchType == 'full'){ // Full stitich
+    // draw stitches
+    if (stitchType == 'full'){ // Full stitch
         this.ctx.rect(x * this._distDot, y * this._distDot, this._radius * 2, this._radius * 2);
-    } else if(stitchType == 'halfL'){ // Half stitch left
+        // resolve stitch type conflicts
+        this.stitches[x + (y * this.xDot)].halfL = 'transparent';
+        this.stitches[x + (y * this.xDot)].halfR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTR = 'transparent';
+        this.stitches[x + (y * this.xDot)].qBL = 'transparent';
+        this.stitches[x + (y * this.xDot)].qBR = 'transparent';
+        this.stitches[x + (y * this.xDot)].qTL = 'transparent';
+        this.stitches[x + (y * this.xDot)].qTR = 'transparent';
+    }
+    else if(stitchType == 'halfL'){ // Half stitch left
         this.ctx.moveTo(x * this._distDot, y * this._distDot + this._radius * 2);
         this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot + this._radius * 2);
         this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius);
         this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot);
         this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot);
         this.ctx.lineTo(x * this._distDot, y * this._distDot + this._radius);
-    } else if(stitchType == 'halfR'){ // Half stitch right
+        // resolve stitch type conflicts
+        this.stitches[x + (y * this.xDot)].full = 'transparent';
+        this.stitches[x + (y * this.xDot)].halfR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTR = 'transparent';
+        this.stitches[x + (y * this.xDot)].qBL = 'transparent';
+        this.stitches[x + (y * this.xDot)].qTR = 'transparent';
+    }
+    else if(stitchType == 'halfR'){ // Half stitch right
         this.ctx.moveTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius * 2);
         this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot + this._radius * 2);
         this.ctx.lineTo(x * this._distDot, y * this._distDot + this._radius);
         this.ctx.lineTo(x * this._distDot, y * this._distDot);
         this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot);
         this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius);
-    } else if(stitchType == 'tqBL'){ // Three quarter stitch bottom left
+        // resolve stitch type conflicts
+        this.stitches[x + (y * this.xDot)].full = 'transparent';
+        this.stitches[x + (y * this.xDot)].halfL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTR = 'transparent';
+        this.stitches[x + (y * this.xDot)].qBR = 'transparent';
+        this.stitches[x + (y * this.xDot)].qTL = 'transparent';
+    }
+    else if(stitchType == 'tqBL'){ // Three quarter stitch bottom left
         this.ctx.moveTo(x * this._distDot, y * this._distDot + this._radius * 2);
         this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius * 2);
         this.ctx.lineTo(x * this._distDot, y * this._distDot);
-    } else if(stitchType == 'tqBR'){ // Three quarter stitch bottom right
+        // resolve stitch type conflicts
+        this.stitches[x + (y * this.xDot)].full = 'transparent';
+        this.stitches[x + (y * this.xDot)].halfL = 'transparent';
+        this.stitches[x + (y * this.xDot)].halfR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTL = 'transparent';
+        this.stitches[x + (y * this.xDot)].qBL = 'transparent';
+        this.stitches[x + (y * this.xDot)].qBR = 'transparent';
+        this.stitches[x + (y * this.xDot)].qTL = 'transparent';
+    }
+    else if(stitchType == 'tqBR'){ // Three quarter stitch bottom right
         this.ctx.moveTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius * 2);
         this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot);
         this.ctx.lineTo(x * this._distDot, y * this._distDot + this._radius * 2);
-    } else if(stitchType == 'tqTL'){ // Three quarter stitch top left
+        // resolve stitch type conflicts
+        this.stitches[x + (y * this.xDot)].full = 'transparent';
+        this.stitches[x + (y * this.xDot)].halfL = 'transparent';
+        this.stitches[x + (y * this.xDot)].halfR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTR = 'transparent';
+        this.stitches[x + (y * this.xDot)].qBL = 'transparent';
+        this.stitches[x + (y * this.xDot)].qBR = 'transparent';
+        this.stitches[x + (y * this.xDot)].qTR = 'transparent';
+    }
+    else if(stitchType == 'tqTL'){ // Three quarter stitch top left
         this.ctx.moveTo(x * this._distDot, y * this._distDot);
         this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot);
         this.ctx.lineTo(x * this._distDot, y * this._distDot + this._radius * 2);
+        // resolve stitch type conflicts
+        this.stitches[x + (y * this.xDot)].full = 'transparent';
+        this.stitches[x + (y * this.xDot)].halfL = 'transparent';
+        this.stitches[x + (y * this.xDot)].halfR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTR = 'transparent';
+        this.stitches[x + (y * this.xDot)].qBL = 'transparent';
+        this.stitches[x + (y * this.xDot)].qTL = 'transparent';
+        this.stitches[x + (y * this.xDot)].qTR = 'transparent';
     } else if(stitchType == 'tqTR'){ // Three quarter stitch top right
         this.ctx.moveTo(x * this._distDot + this._radius * 2, y * this._distDot);
         this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius * 2);
+        // resolve stitch type conflicts
+        this.stitches[x + (y * this.xDot)].full = 'transparent';
+        this.stitches[x + (y * this.xDot)].halfL = 'transparent';
+        this.stitches[x + (y * this.xDot)].halfR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTL = 'transparent';
+        this.stitches[x + (y * this.xDot)].qBR = 'transparent';
+        this.stitches[x + (y * this.xDot)].qTL = 'transparent';
+        this.stitches[x + (y * this.xDot)].qTR = 'transparent';
         this.ctx.lineTo(x * this._distDot, y * this._distDot);
     } else if(stitchType == 'qBL'){ // Quarter stitch bottom left
         this.ctx.moveTo(x * this._distDot, y * this._distDot + this._radius * 2);
         this.ctx.lineTo(x * this._distDot, y * this._distDot + this._radius);
         this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot + this._radius);
         this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot + this._radius * 2);
+        // resolve stitch type conflicts
+        this.stitches[x + (y * this.xDot)].full = 'transparent';
+        this.stitches[x + (y * this.xDot)].halfL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTL = 'transparent';
     } else if(stitchType == 'qBR'){ // Quarter stitch bottom right
         this.ctx.moveTo(x * this._distDot + this._radius, y * this._distDot + this._radius * 2);
         this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot + this._radius);
         this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius);
         this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius * 2);
+        // resolve stitch type conflicts
+        this.stitches[x + (y * this.xDot)].full = 'transparent';
+        this.stitches[x + (y * this.xDot)].halfR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTR = 'transparent';
     } else if(stitchType == 'qTL'){ // Quarter stitch top left
         this.ctx.moveTo(x * this._distDot, y * this._distDot + this._radius);
         this.ctx.lineTo(x * this._distDot, y * this._distDot);
         this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot);
         this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot + this._radius);
+        // resolve stitch type conflicts
+        this.stitches[x + (y * this.xDot)].full = 'transparent';
+        this.stitches[x + (y * this.xDot)].halfR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTR = 'transparent';
     } else if(stitchType == 'qTR'){ // Quarter stitch top right
         this.ctx.moveTo(x * this._distDot + this._radius, y * this._distDot + this._radius);
         this.ctx.lineTo(x * this._distDot + this._radius, y * this._distDot);
         this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot);
         this.ctx.lineTo(x * this._distDot + this._radius * 2, y * this._distDot + this._radius);
+        // resolve stitch type conflicts
+        this.stitches[x + (y * this.xDot)].full = 'transparent';
+        this.stitches[x + (y * this.xDot)].halfL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTR = 'transparent';
     }
 
     this.ctx.closePath();
@@ -631,7 +743,7 @@ stitcher.prototype._drawGridlines = function() {
 
 	// mark middle of pattern
 	this.ctx.beginPath();
-	this.ctx.strokeStyle = "#000000";
+	this.ctx.strokeStyle = "#92278f";
 	this.ctx.moveTo(21*Math.floor(this.xDot/2) -2, 0);
 	this.ctx.lineTo(21*Math.floor(this.xDot/2) -2, 21 * this.yDot);
 	this.ctx.moveTo(0, 21*Math.floor(this.yDot/2) -2);
@@ -644,6 +756,7 @@ stitcher.prototype._drawGridlines = function() {
 
 stitcher.prototype._onCanvasMouseUp = function(event) {
 	this._mouseDown = false;
+    this.refreshReady = true;
 };
 
 stitcher.prototype._onCanvasMouseDown = function(event) {
@@ -756,5 +869,88 @@ stitcher.prototype.updateTimer = function() {
       $.error( 'Method ' +  method + ' does not exist' );
     }    
   };
+
+  // Begin outlines code
+    Number.prototype.roundTo = function(num) {
+        var resto = this%num;
+        if (resto <= (num/2)) {
+            return this-resto;
+        } else {
+            return this+num-resto;
+        }
+    };
+
+    var outlineCanvas = document.getElementById("outlines");
+    var outlineCtx = outlineCanvas.getContext("2d");
+    var outlineCanvasTemp = document.getElementById("outlinesTemp");
+    var outlineCtxTemp = outlineCanvasTemp.getContext("2d");
+    var startX;
+    var startY;
+    var isDown = false;
+
+    $("#outlinesTemp").css({
+        left: -1200,
+        top: 0
+    });
+
+    function drawLine(toX, toY, context) {
+        context.lineWidth = 2;
+        context.strokeStyle = jQuery("#threadpicker").val();
+        context.beginPath();
+        context.moveTo(startX.roundTo(21) - 1, startY.roundTo(21) - 1);
+        context.lineTo(toX.roundTo(21) - 1, toY.roundTo(21) - 1);
+        context.stroke();
+    }
+
+    function outlineMouseDown(e) {
+        e.preventDefault();
+        // mouseX = parseInt(e.clientX - offsetX);
+        // mouseY = parseInt(e.clientY - offsetY);
+        mouseX = e.pageX - $("#outlines").offset().left;
+        mouseY = e.pageY - $("#outlines").offset().top;
+
+        isDown = !isDown;
+
+        if (isDown == true){
+            startX = mouseX;
+            startY = mouseY;
+            outlineCtxTemp.clearRect(0, 0, outlineCanvasTemp.width, outlineCanvasTemp.height);
+            $("#outlinesTemp").css({
+                left: 0,
+                top: 0
+            });
+        }
+        if (isDown == false){
+            // mouseX = parseInt(e.clientX - offsetX);
+            // mouseY = parseInt(e.clientY - offsetY);
+            mouseX = e.pageX - $("#outlines").offset().left;
+            mouseY = e.pageY - $("#outlines").offset().top;
+            $("#outlinesTemp").css({
+                left: -1200,
+                top: 0
+            });
+            drawLine(mouseX, mouseY, outlineCtx);
+        }
+    }
+
+    function outlineMouseMove(e) {
+        e.preventDefault();
+        if (!isDown) {
+            return;
+        }
+        // mouseX = parseInt(e.clientX - offsetX);
+        // mouseY = parseInt(e.clientY - offsetY);
+        mouseX = e.pageX - $("#outlines").offset().left;
+        mouseY = e.pageY - $("#outlines").offset().top;
+        outlineCtxTemp.clearRect(0, 0, outlineCanvasTemp.width, outlineCanvasTemp.height);
+        drawLine(mouseX, mouseY, outlineCtxTemp);
+    }
+
+    $("#outlines").mousedown(function (e) {
+        outlineMouseDown(e);
+    });
+    $("#outlines").mousemove(function (e) {
+        outlineMouseMove(e);
+    });
 
 })( jQuery );

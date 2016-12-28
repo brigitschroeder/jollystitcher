@@ -42,11 +42,16 @@ input.btn,
     /*margin-top: 60px;*/
     border: 1px solid #ccc;
     border-radius: 4px;
+    position: relative;
 }
 #canvas-outer {
     overflow: hidden;
     position: relative;
  }
+#stitcher {
+    position: relative;
+    z-index: 0;
+}
 canvas {
   cursor: crosshair;
   margin: 20px;
@@ -153,5 +158,19 @@ textarea#info {
 #audiojs_wrapper0 {
   margin: 30px auto 10px ;
 }
+.modeImg {
+    position: relative;
+    bottom: 2px;
+    display: inline-block;
+    margin-right: 3px;
+}
 
+
+
+#outlines, #outlinesTemp {
+    position:absolute;
+    top:0px;
+    left:0px;
+    z-index: 999;
+}
 

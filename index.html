@@ -382,18 +382,22 @@
 					<option data-content="<span class='colorBlock' style='background-color: #8C756D;'></span> DMC 3790 Beige Grey - ULT DK">#8C756D</option>
 					<option data-content="<span class='colorBlock' style='background-color: #514C53;'></span> DMC 3799 Pewter Grey - VY DK">#514C53</option>
 				</select>
-
+				<!--
 				<button type="button" class="btn btn-default" name="refresh">
 					<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh
 				</button>
+				-->
 				<button type="button" class="btn btn-default" name="clear">
 					<span class="glyphicon glyphicon-erase" aria-hidden="true"></span> Clear All
 				</button>
 				<a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalEditSettings">
-					<span class="glyphicon glyphicon-star" aria-hidden="true"></span> Settings
+					<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings
 				</a>
 				<button type="button" class="btn btn-default" name="image">
 					<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Image
+				</button>
+				<button type="button" class="btn btn-default" name="load">
+					<span class="glyphicon glyphicon-open" aria-hidden="true"></span> Load
 				</button>
 				<button type="button" class="btn btn-default" name="save">
 					<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save
@@ -403,18 +407,19 @@
 				</button>
 
 				<select id="modepicker" class="selectpicker">
-					<option data-content="<span class='glyphicon glyphicon-stop'></span> Full stitch">full</option>
-					<option data-content="<span class='glyphicon glyphicon-menu-down'></span> Half stitch left">halfL</option>
-					<option data-content="<span class='glyphicon glyphicon-menu-down'></span> Half stitch right">halfR</option>
-					<option data-content="<span class='glyphicon glyphicon-menu-down'></span> Three quarter stitch bottom left">tqBL</option>
-					<option data-content="<span class='glyphicon glyphicon-menu-left'></span> Three quarter stitch bottom right">tqBR</option>
-					<option data-content="<span class='glyphicon glyphicon-menu-right'></span> Three quarter stitch top left">tqTL</option>
-					<option data-content="<span class='glyphicon glyphicon-menu-up'></span> Three quarter stitch top right">tqTR</option>
-					<option data-content="<span class='glyphicon glyphicon-menu-down'></span> Quarter stitch bottom left">qBL</option>
-					<option data-content="<span class='glyphicon glyphicon-menu-left'></span> Quarter stitch bottom right">qBR</option>
-					<option data-content="<span class='glyphicon glyphicon-menu-right'></span> Quarter stitch top left">qTL</option>
-					<option data-content="<span class='glyphicon glyphicon-menu-up'></span> Quarter stitch top right">qTR</option>
-					<option data-content="<span class='glyphicon glyphicon-minus'></span> Backstitch">outline</option>
+					<option data-content="<img class='modeImg' src='img/full.gif'> Full stitch">full</option>
+					<option data-content="<img class='modeImg' src='img/halfL.gif'> Half stitch left">halfL</option>
+					<option data-content="<img class='modeImg' src='img/halfR.gif'> Half stitch right">halfR</option>
+					<option data-content="<img class='modeImg' src='img/tqBL.gif'> Three quarter stitch bottom left">tqBL</option>
+					<option data-content="<img class='modeImg' src='img/tqBR.gif'> Three quarter stitch bottom right">tqBR</option>
+					<option data-content="<img class='modeImg' src='img/tqTL.gif'> Three quarter stitch top left">tqTL</option>
+					<option data-content="<img class='modeImg' src='img/tqTR.gif'> Three quarter stitch top right">tqTR</option>
+					<option data-content="<img class='modeImg' src='img/qBL.gif'> Quarter stitch bottom left">qBL</option>
+					<option data-content="<img class='modeImg' src='img/qBR.gif'> Quarter stitch bottom right">qBR</option>
+					<option data-content="<img class='modeImg' src='img/qTL.gif'> Quarter stitch top left">qTL</option>
+					<option data-content="<img class='modeImg' src='img/qTR.gif'> Quarter stitch top right">qTR</option>
+					<option data-content="<img class='modeImg' src='img/outline.gif'> Backstitch">outline</option>
+					<option data-content="<img class='modeImg' src='img/knot.gif'> French Knot">knot</option>
 					<option data-content="<span class='glyphicon glyphicon-remove'></span> Pan stitching area">pan</option>
 					<option data-content="<span class='glyphicon glyphicon-erase'></span> Remove stitches">erase</option>
 					<option data-content="<span class='glyphicon glyphicon-paperclip'></span> Select stitches">select</option>
@@ -434,9 +439,12 @@
 		<div id="canvas-outer">
 			<!--<ul class="rulerTop"><li>1</li><li>2</li><li>3</li><li>4</li></ul>-->
 			<div id="canvas-wrapper">
+				<canvas id="outlinesTemp" width="1180" height="573"></canvas>
+				<canvas id="outlines" width="1180" height="573"></canvas>
 				<canvas width="1180" height="573" class="stitcher" id="stitcher"></canvas>
 			</div>
 		</div>
+
 	</div>					
 
 	<!--<input id="touch-toggle" name="touch-toggle" type="button">-->
