@@ -25,7 +25,7 @@ IndexController.prototype._updateMode = function() {
 
     $('#outlines').css('z-index', 999);
     $('#stitcher').css('z-index', 0);
-    if (jQuery("#modepicker").val() == 'outline') {
+    if (modeValue == 'outline' || modeValue == 'knot') {
         // $('#outlines').css('z-index', 999);
         // $('#stitcher').css('z-index', 0);
         $('#outlines').css('pointer-events', 'all');
@@ -544,7 +544,26 @@ stitcher.prototype._draw = function(x, y, colorName, stitchType) {
     this.ctx.beginPath();
 
     // draw stitches
-    if (stitchType == 'full'){ // Full stitch
+    if (stitchType == 'none'){ // Remove stitches
+        this.ctx.fillStyle = 'white'; //TODO set to background color
+        this.ctx.lineWidth = 1;
+        this.ctx.strokeStyle = "#00e0ff"; //TODO set to grid color
+        this.ctx.rect(x * this._distDot, y * this._distDot, this._radius * 2, this._radius * 2);
+        this.stitches[x + (y * this.xDot)].full = 'transparent';
+        this.stitches[x + (y * this.xDot)].halfL = 'transparent';
+        this.stitches[x + (y * this.xDot)].halfR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqBR = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTL = 'transparent';
+        this.stitches[x + (y * this.xDot)].tqTR = 'transparent';
+        this.stitches[x + (y * this.xDot)].qBL = 'transparent';
+        this.stitches[x + (y * this.xDot)].qBR = 'transparent';
+        this.stitches[x + (y * this.xDot)].qTL = 'transparent';
+        this.stitches[x + (y * this.xDot)].qTR = 'transparent';
+
+        this.ctx.stroke();
+    }
+    else if (stitchType == 'full'){ // Full stitch
         this.ctx.rect(x * this._distDot, y * this._distDot, this._radius * 2, this._radius * 2);
         // resolve stitch type conflicts
         this.stitches[x + (y * this.xDot)].halfL = 'transparent';
@@ -693,14 +712,14 @@ stitcher.prototype._draw = function(x, y, colorName, stitchType) {
     }
 
     this.ctx.closePath();
-	this.ctx.fill();
+    this.ctx.fill();
 
 };
 
 stitcher.prototype._drawGridlines = function() {
 
     // grid
-    this.ctx.strokeStyle = "#00e0ff";
+    this.ctx.strokeStyle = "#00e0ff"; //TODO set to grid color
     this.ctx.lineWidth = 1;
     this.ctx.beginPath();
     for(var i=0; i<this.dots; i++) {
@@ -894,12 +913,19 @@ stitcher.prototype.updateTimer = function() {
     });
 
     function drawLine(toX, toY, context) {
-        context.lineWidth = 2;
+        context.lineWidth = 3;
         context.strokeStyle = jQuery("#threadpicker").val();
         context.beginPath();
-        context.moveTo(startX.roundTo(21) - 1, startY.roundTo(21) - 1);
-        context.lineTo(toX.roundTo(21) - 1, toY.roundTo(21) - 1);
+        context.moveTo(startX.roundTo(21) - 2, startY.roundTo(21) - 2);
+        context.lineTo(toX.roundTo(21) - 2, toY.roundTo(21) - 2);
         context.stroke();
+    }
+
+    function drawKnot(toX, toY, context) {
+        context.fillStyle = jQuery("#threadpicker").val();
+        context.beginPath();
+        context.arc(toX, toY, 4, 0, 2*Math.PI, false);
+        context.fill();
     }
 
     function outlineMouseDown(e) {
@@ -909,28 +935,37 @@ stitcher.prototype.updateTimer = function() {
         mouseX = e.pageX - $("#outlines").offset().left;
         mouseY = e.pageY - $("#outlines").offset().top;
 
-        isDown = !isDown;
+        if (jQuery("#modepicker").val() == 'outline'){
+            isDown = !isDown;
 
-        if (isDown == true){
-            startX = mouseX;
-            startY = mouseY;
-            outlineCtxTemp.clearRect(0, 0, outlineCanvasTemp.width, outlineCanvasTemp.height);
-            $("#outlinesTemp").css({
-                left: 0,
-                top: 0
-            });
+            if (isDown == true){
+                startX = mouseX;
+                startY = mouseY;
+                outlineCtxTemp.clearRect(0, 0, outlineCanvasTemp.width, outlineCanvasTemp.height);
+                $("#outlinesTemp").css({
+                    left: 0,
+                    top: 0
+                });
+            }
+            if (isDown == false){
+                // mouseX = parseInt(e.clientX - offsetX);
+                // mouseY = parseInt(e.clientY - offsetY);
+                mouseX = e.pageX - $("#outlines").offset().left;
+                mouseY = e.pageY - $("#outlines").offset().top;
+                $("#outlinesTemp").css({
+                    left: -1200,
+                    top: 0
+                });
+                drawLine(mouseX, mouseY, outlineCtx);
+            }
         }
-        if (isDown == false){
-            // mouseX = parseInt(e.clientX - offsetX);
-            // mouseY = parseInt(e.clientY - offsetY);
-            mouseX = e.pageX - $("#outlines").offset().left;
-            mouseY = e.pageY - $("#outlines").offset().top;
-            $("#outlinesTemp").css({
-                left: -1200,
-                top: 0
-            });
-            drawLine(mouseX, mouseY, outlineCtx);
+        else {
+            isDown = false;
+            //french knot
+            drawKnot(mouseX, mouseY, outlineCtx);
         }
+
+
     }
 
     function outlineMouseMove(e) {

@@ -407,6 +407,7 @@
 				</button>
 
 				<select id="modepicker" class="selectpicker">
+					<option data-content="<img class='modeImg' src='img/none.gif'> Remove stitches">none</option>
 					<option data-content="<img class='modeImg' src='img/full.gif'> Full stitch">full</option>
 					<option data-content="<img class='modeImg' src='img/halfL.gif'> Half stitch left">halfL</option>
 					<option data-content="<img class='modeImg' src='img/halfR.gif'> Half stitch right">halfR</option>
@@ -421,7 +422,6 @@
 					<option data-content="<img class='modeImg' src='img/outline.gif'> Backstitch">outline</option>
 					<option data-content="<img class='modeImg' src='img/knot.gif'> French Knot">knot</option>
 					<option data-content="<span class='glyphicon glyphicon-remove'></span> Pan stitching area">pan</option>
-					<option data-content="<span class='glyphicon glyphicon-erase'></span> Remove stitches">erase</option>
 					<option data-content="<span class='glyphicon glyphicon-paperclip'></span> Select stitches">select</option>
 				</select>
 
@@ -473,6 +473,8 @@
 								<input type="number" class="form-control" id="chartHeight" name="chartHeight">
 							</div>
 						</div>
+						<!-- TODO add presets by size in inches or centimeters -->
+						<!-- TODO add fabric color and grid color pickers -->
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
