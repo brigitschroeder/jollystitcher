@@ -610,6 +610,7 @@ stitcher.prototype.clear = function() {
             qTR:'transparent'
         };
 	}
+    outlineCtx.clearRect(0, 0, outlineCanvas.width, outlineCanvas.height);
 	// this.refreshReady = true;
     this.refresh();
 	// $('#share-box').hide();
